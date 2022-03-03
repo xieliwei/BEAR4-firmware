@@ -1,12 +1,12 @@
 void set_ublox_pms(uint8_t v) {
   // UBX-CFG-PMS
   // 0x00 -> Full Power
-  // 0x01 ->Balanced
+  // 0x01 -> Balanced
   // 0x02 -> Interval
   // 0x03 -> Aggressive with 1 Hz (lowest power with continuous operation)
   // 0x04 -> Aggressive with 2 Hz
   // 0x05 -> Aggressive with 4 Hz
-  
+
   uint8_t setPMS[8] = {0};
   setPMS[1] = v;
 

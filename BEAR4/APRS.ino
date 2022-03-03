@@ -1,7 +1,3 @@
-uint8_t generate_comment(uint8_t *p) {
-  return 0;
-}
-
 void send_report(bool use_gps) {
   static uint8_t page = 0;
   uint8_t packet[200];
@@ -130,9 +126,7 @@ void send_report(bool use_gps) {
   if (thealti > 2000) {
     APRS_sendPkt(packet, sz, 3);
   } else {
-    // RBF - Set this to 4 before flight
     APRS_sendPkt(packet, sz, 4);
-    //APRS_sendPkt(packet, sz, 3);
   }
   //sleep_dra818();
 }
