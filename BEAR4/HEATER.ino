@@ -18,13 +18,17 @@ void task_heater() {
   // Safeties
   if (ptemp > 40.0) {
     digitalWrite(PIN_HEATER, LOW);
-    DBGPORT.println("Overtemp heater cutoff!");
+    if (heaterOn) {
+      DBGPORT.println("Overtemp heater cutoff!");
+    }
     heaterOn = false;
   }
   // Battery won't survive this, likely erronous reading
   if (ptemp < -50.0) {
     digitalWrite(PIN_HEATER, LOW);
-    DBGPORT.println("Undertemp heater cutoff!");
+    if (heaterOn) {
+      DBGPORT.println("Undertemp heater cutoff!");
+    }
     heaterOn = false;
   }
 }
