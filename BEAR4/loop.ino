@@ -44,17 +44,19 @@ void loop() {
 
     last_time2 = curr_time;
   }
-  
+
+  // Cyclic sleep: HP_SLEEP_S of wake time, LP_SLEEP_S of sleep
   if ((curr_time - last_time) > (HP_SLEEP_S * 1000)) {
-    last_time = curr_time;
     DBGPORT.print(millis());
     DBGPORT.println(": Going to sleep");
     Serial.flush();
     //sleep_dra818();
     esp_sleep_enable_timer_wakeup(LP_SLEEP_S * uS_TO_S_FACTOR);
     esp_light_sleep_start();
-    DBGPORT.print(millis());
+    curr_time = millis();
+    DBGPORT.print(curr_time);
     DBGPORT.println(": Wake up!");
+    last_time = curr_time;
   }
 
   // This should be sufficient for now
