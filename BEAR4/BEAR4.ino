@@ -28,10 +28,10 @@ String boot_message = "BEAR4 Project";
 
 // We report APRS every 15s, so sleep cycle needs
 // to be less than 7.5s
-#define LP_SLEEP_S  (13)
-#define HP_SLEEP_S  (1)
-//#define LP_SLEEP_S  (4)
-//#define HP_SLEEP_S  (0.5)
+// Ideally we need to have at least 1s of wake time
+// so we can properly catch a full GPS PVT report
+#define LP_SLEEP_S  (12)
+#define HP_SLEEP_S  (2)
 
 #define DBGPORT Serial
 //#define DBGPORT WebSerial
