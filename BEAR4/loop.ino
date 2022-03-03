@@ -11,6 +11,7 @@ void loop() {
   // Every 5000ms
   task_sensors();
   // Every 5000ms
+  // With always-running safeties
   task_heater();
   // Every 5000ms
   task_battery();
