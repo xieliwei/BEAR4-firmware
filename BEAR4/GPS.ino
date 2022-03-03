@@ -39,17 +39,30 @@ void task_gps() {
   if (curr_time - last_time > 5000) {
     last_time = curr_time;
 
-    tyear = myGNSS.getYear();
-    tmonth = myGNSS.getMonth() % 13;
-    tday = myGNSS.getDay() % 32;
-
-    thour = myGNSS.getHour() % 24;
-    tmin = myGNSS.getMinute() % 60;
-    tsec = myGNSS.getSecond() % 60;
-    tms = myGNSS.getMillisecond() % 1000;
-    tsync = millis();
-
     fixType = myGNSS.getFixType();
+
+    // GPS gives unreliable timing when it loses fix, sometimes
+    // keeping time stuck. We don't use GPS time when this happens.
+    // Set to true if we should use GPS time no matter what
+    bool use_gps_time = false;
+    //if (fixType == 0) use_gps_time = false;        // No Fix
+    //else if (fixType == 1) use_gps_time = false;   // Dead reckoning
+    if (fixType == 2) use_gps_time = true;         // 2D
+    else if (fixType == 3) use_gps_time = true;    // 3D
+    else if (fixType == 4) use_gps_time = true;    // GNSS + Dead reckoning
+    else if (fixType == 5) use_gps_time = true;    // Time only
+
+    if (use_gps_time) {
+      tyear = myGNSS.getYear();
+      tmonth = myGNSS.getMonth() % 13;
+      tday = myGNSS.getDay() % 32;
+  
+      thour = myGNSS.getHour() % 24;
+      tmin = myGNSS.getMinute() % 60;
+      tsec = myGNSS.getSecond() % 60;
+      tms = myGNSS.getMillisecond() % 1000;
+      tsync = millis();
+    }
 
     glatitude = (float)myGNSS.getLatitude() / 10000000;
     glongitude = (float)myGNSS.getLongitude() / 10000000;
