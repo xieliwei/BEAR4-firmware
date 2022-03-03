@@ -13,7 +13,7 @@ void send_report(bool use_gps) {
   float tempf;
   //  String temps;
 
-  uint32_t thealti = 0;
+  float thealti = 0;
 
   packet[sz++] = use_gps ? '@' : '>';
 
