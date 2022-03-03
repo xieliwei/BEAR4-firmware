@@ -6,20 +6,25 @@ void loop() {
   static unsigned long last_time2 = 0;
 
   // WARNING - Task order does matter!
+  // NOTE - Actual task running rate will be
+  // affected by cyclic sleep.
+  // Every 5000ms
   task_sensors();
-
+  // Every 5000ms
   task_heater();
-
+  // Every 5000ms
   task_battery();
-
+  // Every 5000ms
+  // With always-running parser
   task_gps();
-
+  // Every 250ms so we can have 1s accuracy
   task_rtc();
-
+  // Every APRS_mod_s (default was 30s)
   task_aprs();
-
+  // Every time minute is a multiple of SSTV_mod_m
   task_sstv();
-
+  // Every 10000ms for 60s
+  // With always-running worker when Wi-Fi is active
   task_wifi();
 
   if ((curr_time - last_time2) > 1000) {
