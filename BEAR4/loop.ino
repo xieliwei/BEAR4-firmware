@@ -28,6 +28,8 @@ void loop() {
   task_wifi();
 
   if ((curr_time - last_time2) > 1000) {
+    DBGPORT.print(msg_id);
+    DBGPORT.print(' ');
     DBGPORT.print(tday);
     DBGPORT.print('/');
     DBGPORT.print(tmonth);
