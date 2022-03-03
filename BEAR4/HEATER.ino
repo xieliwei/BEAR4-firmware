@@ -16,7 +16,7 @@ void task_heater() {
   }
 
   // Safeties
-  if (ptemp > 40.0) {
+  if (ptemp > 50.0) {
     digitalWrite(PIN_HEATER, LOW);
     if (heaterOn) {
       DBGPORT.println("Overtemp heater cutoff!");
