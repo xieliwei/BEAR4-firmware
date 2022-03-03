@@ -182,7 +182,7 @@ void task_sstv() {
   static unsigned long last_time = 0;
 
   // RBF - Set this to true before flight
-  bool inhibit_sstv = false;
+  bool inhibit_sstv = true;
 
   // Only allow SSTV after SSTV_inhibit_height_m height
   if (galtitudeMSL > SSTV_inhibit_height_m || paltitudeMSL > SSTV_inhibit_height_m) {
