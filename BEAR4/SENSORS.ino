@@ -56,7 +56,7 @@ void setup_sensors() {
   bmp388.startNormalConversion();
 
   accelgyro.initialize();
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+  DBGPORT.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
   accelgyro.setIntDataReadyEnabled(true);
   accelgyro.setIntFreefallEnabled(true);
   accelgyro.setIntEnabled(true);

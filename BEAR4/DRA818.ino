@@ -32,7 +32,7 @@ inline void tune_dra818(String freq) {
     do {
       while (!radioCtrl.available() && ((millis() - atp_start) < 5000));
       tc = radioCtrl.read();
-      Serial.write(tc);
+      DBGPORT.write(tc);
       atp[0] = atp[1];
       atp[1] = atp[2];
       atp[2] = tc;
@@ -40,7 +40,7 @@ inline void tune_dra818(String freq) {
     } while ((tc != '\n' || !atdetected) && ((millis() - atp_start) < 5000));
     if (atdetected) break;
   }
-  Serial.println();
+  DBGPORT.println();
 }
 
 inline void wake_dra818() {
@@ -55,7 +55,7 @@ inline void wake_dra818() {
     do {
       while (!radioCtrl.available() && ((millis() - atp_start) < 5000));
       tc = radioCtrl.read();
-      Serial.write(tc);
+      DBGPORT.write(tc);
       atp[0] = atp[1];
       atp[1] = atp[2];
       atp[2] = tc;
@@ -63,7 +63,7 @@ inline void wake_dra818() {
     } while ((tc != '\n' || !atdetected) && ((millis() - atp_start) < 5000));
     if (atdetected) break;
   }
-  Serial.println();
+  DBGPORT.println();
 
   for (int i = 0; i < 3; i++) {
     radioCtrl.print("AT+DMOSETVOLUME=8\r\n");
@@ -74,7 +74,7 @@ inline void wake_dra818() {
     do {
       while (!radioCtrl.available() && ((millis() - atp_start) < 5000));
       tc = radioCtrl.read();
-      Serial.write(tc);
+      DBGPORT.write(tc);
       atp[0] = atp[1];
       atp[1] = atp[2];
       atp[2] = tc;
@@ -82,7 +82,7 @@ inline void wake_dra818() {
     } while ((tc != '\n' || !atdetected) && ((millis() - atp_start) < 5000));
     if (atdetected) break;
   }
-  Serial.println();
+  DBGPORT.println();
 }
 
 void setup_dra818() {

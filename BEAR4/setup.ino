@@ -12,24 +12,24 @@ void setup() {
   Serial.println("Wifi");
   setup_wifi();
 
-  Serial.println("RTC");
+  DBGPORT.println("RTC");
   setup_rtc();
   
-  Serial.println("Battery");
+  DBGPORT.println("Battery");
   setup_battery();
   
   i2c_scanner();
   
-  Serial.println("Sensors");
+  DBGPORT.println("Sensors");
   setup_sensors();
-  Serial.println("DRA818");
+  DBGPORT.println("DRA818");
   setup_dra818();
-  Serial.println("GPS");
+  DBGPORT.println("GPS");
   setup_gps();
-  Serial.println("SSTV");
+  DBGPORT.println("SSTV");
   setup_sstv();
   // Will transmit boot message, ensure dra818 is ready
-  Serial.println("APRS");
+  DBGPORT.println("APRS");
   setup_aprs();
 
   // Unused pins for expansion ports
@@ -44,7 +44,7 @@ void setup() {
   pinMode(PIN_I2C2_SDA, INPUT);
   pinMode(PIN_I2C2_SCL, INPUT);
 
-  Serial.println("Bootup complete");
+  DBGPORT.println("Bootup complete");
   tickle_watchdog();
 }
 

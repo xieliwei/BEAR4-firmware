@@ -33,8 +33,8 @@ String boot_message = "BEAR4 Project";
 #define LP_SLEEP_S  (12)
 #define HP_SLEEP_S  (2)
 
-#define DBGPORT Serial
-//#define DBGPORT WebSerial
+//#define DBGPORT Serial
+#define DBGPORT udpstream
 
 // NOTE - This will be visible in source control,
 // don't use anything serious here!
