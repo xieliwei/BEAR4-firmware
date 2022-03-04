@@ -8,6 +8,9 @@ void loop() {
   // WARNING - Task order does matter!
   // NOTE - Actual task running rate will be
   // affected by cyclic sleep.
+  // Every 10000ms for 60s
+  // With always-running worker when Wi-Fi is active
+  task_wifi();
   // Every 5000ms
   task_sensors();
   // Every 5000ms
@@ -24,9 +27,6 @@ void loop() {
   task_aprs();
   // Every time minute is a multiple of SSTV_mod_m
   task_sstv();
-  // Every 10000ms for 60s
-  // With always-running worker when Wi-Fi is active
-  task_wifi();
 
   if ((curr_time - last_time2) > 1000) {
     DBGPORT.print(msg_id);
