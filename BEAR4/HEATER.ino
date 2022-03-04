@@ -1,15 +1,19 @@
 void task_heater() {
   unsigned long curr_time = millis();
   static unsigned long last_time = 0;
+  static bool heater_state = false;
 
+  // Update state only, we don't want to pre-maturely
+  // turn heater on when there is possibly a safety
+  // cutoff about to be triggered after this.
   if (curr_time - last_time >= 5000) {
     if (ptemp <= TEMP_SP_LOW_DEGC) {
-      digitalWrite(PIN_HEATER, HIGH);
       DBGPORT.println("Heater on!");
+      heater_state = true;
       heaterOn = true;
     } else if (ptemp >= TEMP_SP_HIGH_DEGC) {
-      digitalWrite(PIN_HEATER, LOW);
       DBGPORT.println("Heater off!");
+      heater_state = false;
       heaterOn = false;
     }
     last_time = curr_time;
@@ -18,6 +22,7 @@ void task_heater() {
   // Safeties
   if (ptemp > 50.0) {
     digitalWrite(PIN_HEATER, LOW);
+    heater_state = false;
     if (heaterOn) {
       DBGPORT.println("Overtemp heater cutoff!");
     }
@@ -26,10 +31,18 @@ void task_heater() {
   // Battery won't survive this, likely erronous reading
   if (ptemp < -50.0) {
     digitalWrite(PIN_HEATER, LOW);
+    heater_state = false;
     if (heaterOn) {
       DBGPORT.println("Undertemp heater cutoff!");
     }
     heaterOn = false;
+  }
+
+  // Actually turn on/off heater if safeties not triggered
+  if (heater_state) {
+    digitalWrite(PIN_HEATER, HIGH);
+  } else {
+    digitalWrite(PIN_HEATER, LOW);
   }
 }
 
