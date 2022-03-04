@@ -34,6 +34,8 @@ void setup_wifi() {
 
   DynamicArduinoOTA.begin();
 
+  udpstream.begin(ipaddr);
+
   wifiOn = true;
 }
 
@@ -51,5 +53,7 @@ void task_wifi() {
     wifiOn = false;
   } else {
     DynamicArduinoOTA.handle();
+    udpstream.flush();
+    udpstream.task();
   }
 }

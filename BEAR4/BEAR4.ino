@@ -44,6 +44,7 @@ const char* wifissid = "BEAR4";
 const char* wifipsk = "SARTS1234";
 // How long we keep the AP on before shutdown
 #define WIFI_TIMEOUT 60000
+#define DEBUG_SERIAL_PORT 54321
 
 //////////////////////////////////////////////////////
 //// Global State
@@ -217,4 +218,7 @@ GFXcanvas8 im(WIDTH, HEIGHT, (uint8_t*)im_buf);
 #include <ESPmDNS.h>
 #include <WiFiUdp.h>
 #include <DynamicArduinoOTA.h>
+#include <UDPStream.h>
 #include <esp_wifi.h>
+
+UDPStream udpstream;
