@@ -36,6 +36,15 @@ String boot_message = "BEAR4 Project";
 #define DBGPORT Serial
 //#define DBGPORT WebSerial
 
+// NOTE - This will be visible in source control,
+// don't use anything serious here!
+// Default IP of the device in softAP mode is:
+//    192.168.4.1 or BEAR4.local
+const char* wifissid = "BEAR4";
+const char* wifipsk = "SARTS1234";
+// How long we keep the AP on before shutdown
+#define WIFI_TIMEOUT 60000
+
 //////////////////////////////////////////////////////
 //// Global State
 //////////////////////////////////////////////////////
@@ -95,6 +104,9 @@ float BV = 0.0;         // Volts
 
 // Heater
 bool heaterOn = true;
+
+// WiFi
+bool wifiOn = false;
 
 //////////////////////////////////////////////////////
 //// Pinmap
@@ -201,4 +213,8 @@ GFXcanvas8 im(WIDTH, HEIGHT, (uint8_t*)im_buf);
 //// WIFI
 //////////////////////////////////////////////////////
 #include <WiFi.h>
+#include <WiFiAP.h>
+#include <ESPmDNS.h>
+#include <WiFiUdp.h>
+#include <DynamicArduinoOTA.h>
 #include <esp_wifi.h>
