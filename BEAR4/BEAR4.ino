@@ -41,7 +41,7 @@ String boot_message = "BEAR5 Project";
 // Default IP of the device in softAP mode is:
 //    192.168.4.1 or BEAR5.local
 const char* wifissid = "BEAR5";
-const char* wifipsk = "SARTS1234";
+const char* wifipsk = "flyinghigh";
 // How long we keep the AP on before shutdown
 #define WIFI_TIMEOUT 60000
 #define DEBUG_SERIAL_PORT 54321
