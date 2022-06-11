@@ -104,7 +104,7 @@ void send_report(bool use_gps) {
       sz += sprintf((char*)&(packet[sz]), "%.2fC %.2fhPa %.2fV %02dS", ptemp, ppress, BV, gSIV);
       break;
     case 1:
-      sz += sprintf((char*)&(packet[sz]), "%d %02d %0.2fV1 %0.2fV2 %c", fixType, gPDOP % 100, Cell1, Cell2, heaterOn ? 'H' : 'X');
+      sz += sprintf((char*)&(packet[sz]), "%d %02d %0.2fV1 %0.2fV2 %c %.2fC", fixType, gPDOP % 100, Cell1, Cell2, heaterOn ? 'H' : 'X', btemp);
       break;
     case 2:
       sz += sprintf((char*)&(packet[sz]), "%+05dx %+05dy %+05dz %c %c", accel_x, accel_y, accel_z, freefall ? 'F' : 'X', heaterOn ? 'H' : 'X');
