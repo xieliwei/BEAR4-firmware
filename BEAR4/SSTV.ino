@@ -261,6 +261,11 @@ void task_sstv() {
 }
 
 void setup_sstv() {
+  im_buf = (uint8_t (*)[WIDTH][COMPONENTS])malloc(HEIGHT * WIDTH * COMPONENTS);
+  if (!im_buf) {
+    Serial.println("ERR: Unable to allocate im_buf");
+  }
+  im = new GFXcanvas8(WIDTH, HEIGHT, (uint8_t*)im_buf);
   im->setTextColor(0);
   // Font is 5x8 per character
   im->setTextSize(1);
