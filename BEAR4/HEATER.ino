@@ -20,7 +20,7 @@ void task_heater() {
   }
 
   // Safeties
-  if (ptemp > 50.0) {
+  if (btemp > 50.0) {
     digitalWrite(PIN_HEATER, LOW);
     heater_state = false;
     if (heaterOn) {
