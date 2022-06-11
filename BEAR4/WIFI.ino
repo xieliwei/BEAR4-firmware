@@ -56,10 +56,9 @@ void task_wifi() {
     udpstream.flush();
     udpstream.task();
     if (udpstream.contains('!')) {
+      udpstream.clear();
       // Extend Wi-Fi session
-      DBGPORT.print("Extending Wi-Fi time");
       offset = curr_time;
     }
-    udpstream.clear();
   }
 }
