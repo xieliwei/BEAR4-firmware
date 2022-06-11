@@ -41,9 +41,6 @@ void setup() {
 
   pinMode(PIN_ONEWIRE, INPUT);
 
-  pinMode(PIN_I2C2_SDA, INPUT);
-  pinMode(PIN_I2C2_SCL, INPUT);
-
   Serial.println("Bootup complete");
   tickle_watchdog();
 }
