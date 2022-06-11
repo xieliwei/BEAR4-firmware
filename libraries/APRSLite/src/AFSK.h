@@ -10,11 +10,20 @@
 // you are on the original ESP32
 #define HW_ESP32
 //#define HW_ESP32S3
+
+#ifdef HW_ESP32S3
 #define BITRATE       (1200)
-#define BITLEN_MICROS (830) // 833
+#define BITLEN_MICROS (832)
+#define BIT_STUFF_LEN (5)
+#define MARK_FREQ     (1198)
+#define SPACE_FREQ    (2166)
+#else
+#define BITRATE       (1200)
+#define BITLEN_MICROS (833)
 #define BIT_STUFF_LEN (5)
 #define MARK_FREQ     (1200)
 #define SPACE_FREQ    (2200)
+#endif
 
 #define TONE(b)  ((b) ? MARK_FREQ : SPACE_FREQ)
 
