@@ -207,6 +207,14 @@ bool wifiOn = false;
 //////////////////////////////////////////////////////
 //// DRA818
 //////////////////////////////////////////////////////
+#ifdef HW_ESP32S3
+#include "hal/ledc_types.h"
+#include "soc/ledc_periph.h"
+#include "soc/ledc_struct.h"
+#include "hal/gpio_hal.h"
+#include "esp_rom_gpio.h"
+ledc_dev_t *ledc = &LEDC;
+#else
 #include "soc/rtc_io_reg.h"
 #include "soc/rtc_cntl_reg.h"
 #include "soc/sens_reg.h"
@@ -214,6 +222,7 @@ bool wifiOn = false;
 #include <driver/dac.h>
 #include <hal/dac_hal.h>
 #include <hal/dac_ll.h>
+#endif
 #include <SoftwareSerial.h>
 SoftwareSerial radioCtrl(PIN_RAD_RX, PIN_RAD_TX);
 
