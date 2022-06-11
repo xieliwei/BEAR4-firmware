@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////
 // !!!!!!! Check all RBF items before flight !!!!!!!
 // Note that this needs to be UTC
-uint16_t todays_date[] = {2022, 03, 04};
-uint16_t todays_time[] = {15, 05, 00};
+uint16_t todays_date[] = {2022, 6, 11};
+uint16_t todays_time[] = {22, 30, 0};
 bool is_leap_year = false;
 
 uint8_t APRS_mod_s = 30;
