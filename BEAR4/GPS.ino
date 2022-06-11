@@ -23,10 +23,10 @@ void set_ublox_pms(uint8_t v) {
   customCfg.classAndIDmatch = SFE_UBLOX_PACKET_VALIDITY_NOT_DEFINED;
 
   if (myGNSS.sendCommand(&customCfg) != SFE_UBLOX_STATUS_DATA_SENT) {
-    DBGPORT.println(F("Attempt to set low power-mode failed!"));
+    Serial.println(F("Attempt to set low power-mode failed!"));
   } else {
-    DBGPORT.print(F("Set GPS to power mode "));
-    DBGPORT.println(v, HEX);
+    Serial.print(F("Set GPS to power mode "));
+    Serial.println(v, HEX);
   }
 }
 
@@ -126,15 +126,15 @@ void task_gps() {
 void setup_gps() {
   uint8_t gnss_tries = 4;
   do {
-    DBGPORT.println("GNSS: trying 460800 baud");
+    Serial.println("GNSS: trying 460800 baud");
     Serial2.begin(460800);
     if (myGNSS.begin(Serial2) == true) break;
 
     delay(100);
-    DBGPORT.println("GNSS: trying 9600 baud");
+    Serial.println("GNSS: trying 9600 baud");
     Serial2.begin(9600);
     if (myGNSS.begin(Serial2) == true) {
-      DBGPORT.println("GNSS: connected at 9600 baud, switching to 38400");
+      Serial.println("GNSS: connected at 9600 baud, switching to 460800");
       myGNSS.setSerialRate(460800);
       delay(100);
     } else {
@@ -143,7 +143,7 @@ void setup_gps() {
     }
     gnss_tries -= 1;
   } while (gnss_tries);
-  DBGPORT.println("GNSS serial connected");
+  Serial.println("GNSS serial connected");
 
   myGNSS.setUART1Output(COM_TYPE_UBX); //Set the UART port to output UBX only
   myGNSS.setNavigationFrequency(1);
@@ -164,19 +164,19 @@ void setup_gps() {
   // Find the start of today's data
   todayStart = myGNSS.findMGAANOForDate(payload, (size_t)payloadSize, todays_date[0], todays_date[1], todays_date[2]);
   if (todayStart < (size_t)payloadSize) {
-    //DBGPORT.print(F("Found the data for today starting at location "));
-    //DBGPORT.println(todayStart);
+    //Serial.print(F("Found the data for today starting at location "));
+    //Serial.println(todayStart);
   } else {
-    DBGPORT.println("Could not find the data for today. This will not work well. The GNSS needs help to start up quickly.");
+    Serial.println("Could not find the data for today. This will not work well. The GNSS needs help to start up quickly.");
   }
 
   // Find the start of tomorrow's data
   tomorrowStart = myGNSS.findMGAANOForDate(payload, (size_t)payloadSize, todays_date[0], todays_date[1], todays_date[2], 1);
   if (tomorrowStart < (size_t)payloadSize) {
-    //DBGPORT.print(F("Found the data for tomorrow starting at location "));
-    //DBGPORT.println(tomorrowStart);
+    //Serial.print(F("Found the data for tomorrow starting at location "));
+    //Serial.println(tomorrowStart);
   } else {
-    DBGPORT.println("Could not find the data for tomorrow. (Today's data may be the last?)");
+    Serial.println("Could not find the data for tomorrow. (Today's data may be the last?)");
   }
 
   //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
