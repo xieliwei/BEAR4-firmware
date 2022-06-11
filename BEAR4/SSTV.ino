@@ -25,6 +25,8 @@ inline uint8_t colour_lookup(uint8_t val, uint8_t comp) {
   }
 }
 
+#define ROBOT36_YSCAN_DELAY (261)
+#define ROBOT36_CSCAN_DELAY (260)
 void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
   //wake_dra818();
   tune_dra818("145.5000");
@@ -87,12 +89,12 @@ void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
     for (uint16_t j = 0; j < WIDTH; j++) {
       float freq = 1500.0 + ((16.0 + (0.003906 * ((65.738 * colour_lookup(image[i][j][0], 0)) + (129.057 * colour_lookup(image[i][j][0], 1)) + (25.064 * colour_lookup(image[i][j][0], 2))))) * 3.1372549);
       set_dac_freq(freq);
-      delayMicroseconds(260); // 275
+      delayMicroseconds(ROBOT36_YSCAN_DELAY); // Ideal: 275
     }
     set_dac_freq(1500);
-    delayMicroseconds(4500); // 4500
+    delayMicroseconds(4500);
     set_dac_freq(1900);
-    delayMicroseconds(1500); // 1500 // 2250
+    delayMicroseconds(1500);
     for (uint16_t j = 0; j < HALFWIDTH; j++) {
       const float hi0 =
         (float)((uint16_t)colour_lookup(image[i][2 * j][0], 0) +
@@ -111,7 +113,7 @@ void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
                 (uint16_t)colour_lookup(image[i + 1][2 * j + 1][0], 2)) / 4.0;
       float freq = 1500.0 + ((128.0 + (0.003906 * ((112.439 * hi0) + (-94.154 * hi1) + (-18.285 * hi2)))) * 3.1372549);
       set_dac_freq(freq);
-      delayMicroseconds(255); // 275
+      delayMicroseconds(ROBOT36_CSCAN_DELAY); // Ideal: 275
     }
 
     set_dac_freq(1200);
@@ -121,12 +123,12 @@ void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
     for (uint16_t j = 0; j < WIDTH; j++) {
       float freq = 1500.0 + ((16.0 + (0.003906 * ((65.738 * colour_lookup(image[i + 1][j][0], 0)) + (129.057 * colour_lookup(image[i + 1][j][0], 1)) + (25.064 * colour_lookup(image[i + 1][j][0], 2))))) * 3.1372549);
       set_dac_freq(freq);
-      delayMicroseconds(260); // 275
+      delayMicroseconds(ROBOT36_YSCAN_DELAY); // Ideal: 275
     }
     set_dac_freq(2300);
-    delayMicroseconds(4500); // 4500
+    delayMicroseconds(4500);
     set_dac_freq(1900);
-    delayMicroseconds(1500); // 1500 / 2250
+    delayMicroseconds(1500);
     for (uint16_t j = 0; j < HALFWIDTH; j++) {
       const float hi0 =
         (float)((uint16_t)colour_lookup(image[i][2 * j][0], 0) +
@@ -145,7 +147,7 @@ void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
                 (uint16_t)colour_lookup(image[i + 1][2 * j + 1][0], 2)) / 4.0;
       float freq = 1500.0 + ((128.0 + (0.003906 * ((-37.945 * hi0) + (-74.494 * hi1) + (112.439 * hi2)))) * 3.1372549);
       set_dac_freq(freq);
-      delayMicroseconds(255); // 275
+      delayMicroseconds(ROBOT36_CSCAN_DELAY); // Ideal: 275
     }
   }
 
