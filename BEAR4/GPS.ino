@@ -146,6 +146,21 @@ void setup_gps() {
   Serial.println("GNSS serial connected");
 
   myGNSS.setUART1Output(COM_TYPE_UBX); //Set the UART port to output UBX only
+
+  // Possible values are:
+  // PORTABLE, STATIONARY, PEDESTRIAN, AUTOMOTIVE, SEA, AIRBORNE1g, AIRBORNE2g, AIRBORNE4g, WRIST, BIKE
+  if (myGNSS.setDynamicModel(DYN_MODEL_AIRBORNE2g) == false) {
+    Serial.println("GNSS: dynamic platform setting failed");
+  }
+  // Let's read the new dynamic model to see if it worked
+  uint8_t newDynamicModel = myGNSS.getDynamicModel();
+  if (newDynamicModel == DYN_MODEL_UNKNOWN) {
+    Serial.println("GNSS: dynamic platform recall failed");
+  } else {
+    Serial.print("GNSS: dynamic model is ");
+    Serial.println(newDynamicModel);
+  }
+  
   myGNSS.setNavigationFrequency(1);
   myGNSS.setAutoPVT(true);
   myGNSS.saveConfiguration(); //Save the current settings to flash and BBR
