@@ -106,6 +106,8 @@ float ptemp = 0;        // DegC
 float ppress = 0;       // hPa
 float paltitudeMSL = 0; // Metres
 
+float btemp = 0;        // DegC
+
 // Battery
 float Cell1 = 0.0;      // Volts
 float Cell2 = 0.0;      // Volts
@@ -236,6 +238,16 @@ BMP388_DEV bmp388;
 //int16_t ax[SEN_AVG_LEN], ay[SEN_AVG_LEN], az[SEN_AVG_LEN];
 //int16_t gx[SEN_AVG_LEN], gy[SEN_AVG_LEN], gz[SEN_AVG_LEN];
 MPU6050 accelgyro;
+
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+OneWire oneWire(PIN_ONEWIRE);
+DallasTemperature sensors(&oneWire);
+DeviceAddress deviceAddress;
+
+#define OW_SENSOR_RES (9)
+unsigned long ow_lastconv = 0;
 
 //////////////////////////////////////////////////////
 //// SSTV

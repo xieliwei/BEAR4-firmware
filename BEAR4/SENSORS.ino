@@ -42,6 +42,14 @@ void task_sensors() {
     DBGPORT.print(freefall);
     DBGPORT.println();
 
+    if (millis() > ow_lastconv + sensors.millisToWaitForConversion(OW_SENSOR_RES)) {
+      btemp = sensors.getTempC(deviceAddress);
+      sensors.requestTemperatures(); // Send the command to get temperatures
+      DBGPORT.print(btemp);
+      DBGPORT.println(F("*C "));
+      ow_lastconv = millis();
+    }
+
     last_time = curr_time;
   }
 }
@@ -60,4 +68,22 @@ void setup_sensors() {
   accelgyro.setIntDataReadyEnabled(true);
   accelgyro.setIntFreefallEnabled(true);
   accelgyro.setIntEnabled(true);
+
+  int i = 0;
+  while ((!sensors.getDS18Count() || !sensors.isParasitePowerMode()) && (millis() < 5000)) {
+    Serial.print(++i);
+    Serial.print(" ");
+    sensors.begin();
+  }
+  Serial.println();
+  while (!sensors.getAddress(deviceAddress, 0) && (millis() < 5000));
+  Serial.print("Onewire sensor: ");
+  for (i = 0; i < sizeof(deviceAddress); i++) {
+    Serial.print(deviceAddress[i], HEX);
+  }
+  Serial.println();
+  sensors.setResolution(deviceAddress, OW_SENSOR_RES, false);
+  sensors.setWaitForConversion(false);
+  sensors.requestTemperatures();
+  ow_lastconv = millis();
 }
