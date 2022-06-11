@@ -215,43 +215,43 @@ void task_sstv() {
     char sbuf[128] = {0}
     ;
     memcpy(im_buf, im_ref, WIDTH * HEIGHT * COMPONENTS);
-    im.setCursor(0, 0);
-    im.setTextSize(4);
-    im.print(callsign + callsign_suffix);
+    im->setCursor(0, 0);
+    im->setTextSize(4);
+    im->print(callsign + callsign_suffix);
 
-    im.setCursor(194, 207);
-    im.setTextSize(4);
-    im.print("BEAR4");
+    im->setCursor(194, 207);
+    im->setTextSize(4);
+    im->print("BEAR5");
 
     // We start custom output at 150x35
     // That gives us 170x65 (without belly) or 170x135 of usable space
     // Font size 2: 15x4 chars | Font size 1: 34x8
-    im.setCursor(149, 37);
-    im.setTextSize(2);
+    im->setCursor(149, 37);
+    im->setTextSize(2);
 
     // Line 1: Date Time
     sprintf(sbuf, "%02d/%02d/%02d %02d:%02d", tday, tmonth, tyear % 100, thour, tmin, tsec);
-    im.print(sbuf);
+    im->print(sbuf);
 
     // Line 2: Lat
-    im.setCursor(149, 54);
+    im->setCursor(149, 54);
     sprintf(sbuf, "Lat %.4f", glatitude);
-    im.print(sbuf);
+    im->print(sbuf);
 
     // Line 3: Lon
-    im.setCursor(149, 71);
+    im->setCursor(149, 71);
     sprintf(sbuf, "Lon %.4f", glongitude);
-    im.print(sbuf);
+    im->print(sbuf);
 
     // Line 4: Alti Speed
-    im.setCursor(149, 88);
+    im->setCursor(149, 88);
     sprintf(sbuf, "%.0fm %.0fkm/h", galtitudeMSL, gspeed);
-    im.print(sbuf);
+    im->print(sbuf);
 
     // Line 5: Temp Press
-    im.setCursor(162, 105);
+    im->setCursor(162, 105);
     sprintf(sbuf, "%d*C %.0fhPa", (int8_t)ptemp, ppress);
-    im.print(sbuf);
+    im->print(sbuf);
     
     robot_img(im_buf);
     last_time = curr_time;
@@ -261,8 +261,8 @@ void task_sstv() {
 }
 
 void setup_sstv() {
-  im.setTextColor(0);
+  im->setTextColor(0);
   // Font is 5x8 per character
-  im.setTextSize(1);
-  im.setTextWrap(true);
+  im->setTextSize(1);
+  im->setTextWrap(true);
 }

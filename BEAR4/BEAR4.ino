@@ -274,8 +274,8 @@ const uint8_t (*im_cm)[4] = BEAR320x240_cm;
 #define HALFWIDTH   (WIDTH/2)
 #define HALFHEIGHT  (HEIGHT/2)
 
-uint8_t im_buf[HEIGHT][WIDTH][COMPONENTS];
-GFXcanvas8 im(WIDTH, HEIGHT, (uint8_t*)im_buf);
+uint8_t (*im_buf)[WIDTH][COMPONENTS] = 0;
+GFXcanvas8 *im;
 
 //////////////////////////////////////////////////////
 //// WATCHDOG
