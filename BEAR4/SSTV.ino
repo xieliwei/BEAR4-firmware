@@ -182,14 +182,8 @@ void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
 }
 
 void task_sstv() {
-  // RBF - Set this to false before flight
-  static bool run_now = false;
-
   unsigned long curr_time = millis();
   static unsigned long last_time = 0;
-
-  // RBF - Set this to true before flight
-  bool inhibit_sstv = true;
 
   // Only allow SSTV after SSTV_inhibit_height_m height
   if (galtitudeMSL > SSTV_inhibit_height_m || paltitudeMSL > SSTV_inhibit_height_m) {
@@ -211,10 +205,15 @@ void task_sstv() {
   // No matter what, if the GPS is not functioning, we don't SSTV to give GPS a chance to lock on
   if (!use_gps) inhibit_sstv = true;
 
-  if (run_now || (!inhibit_sstv && (((tmin % SSTV_mod_m) == 0) && (curr_time - last_time) >= ((SSTV_mod_m * 60000L) - 60000L)))) {
-    char sbuf[128] = {0}
-    ;
-    memcpy(im_buf, im_ref, WIDTH * HEIGHT * COMPONENTS);
+  // This condition is replicated at the CAMERA module as well
+  if (im_buf && (sstv_run_now || (!inhibit_sstv && (((tmin % SSTV_mod_m) == 0) && (curr_time - last_time) >= ((SSTV_mod_m * 60000L) - 60000L))))) {
+    char sbuf[128] = {0};
+    if(!imready || !decode_jpg()) {
+      memcpy(im_buf, im_ref, WIDTH * HEIGHT * COMPONENTS);
+      im->setTextColor(0);
+    } else {
+      im->setTextColor(0, 245);
+    }
     im->setCursor(0, 0);
     im->setTextSize(4);
     im->print(callsign + callsign_suffix);
@@ -254,10 +253,11 @@ void task_sstv() {
     im->print(sbuf);
     
     robot_img(im_buf);
+    imready = false;
     last_time = curr_time;
   }
 
-  run_now = false;
+  sstv_run_now = false;
 }
 
 void setup_sstv() {
@@ -266,6 +266,7 @@ void setup_sstv() {
     Serial.println("ERR: Unable to allocate im_buf");
   }
   im = new GFXcanvas8(WIDTH, HEIGHT, (uint8_t*)im_buf);
+  
   im->setTextColor(0);
   // Font is 5x8 per character
   im->setTextSize(1);

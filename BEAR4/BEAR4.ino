@@ -54,6 +54,12 @@ const char* wifipsk = "flyinghigh";
 #define WIFI_TIMEOUT 60000
 #define DEBUG_SERIAL_PORT 54321
 
+// RBF - Set this to false before flight
+bool sstv_run_now = false;
+
+// RBF - Set this to true before flight
+bool inhibit_sstv = true;
+
 //////////////////////////////////////////////////////
 //// Global State
 //////////////////////////////////////////////////////
@@ -119,6 +125,9 @@ bool heaterOn = true;
 // WiFi
 bool wifiOn = false;
 
+// Camera
+bool imready = false;
+
 //////////////////////////////////////////////////////
 //// Pinmap
 //////////////////////////////////////////////////////
@@ -156,6 +165,9 @@ bool wifiOn = false;
 #define PIN_I2C2_SDA (GPIO_NUM_15)
 #define PIN_I2C2_SCL (GPIO_NUM_16)
 
+#define PIN_CAM_TX (GPIO_NUM_15)
+#define PIN_CAM_RX (GPIO_NUM_16)
+
 #define PIN_GPS_TX (GPIO_NUM_37)
 #define PIN_GPS_RX (GPIO_NUM_36)
 #else
@@ -189,6 +201,9 @@ bool wifiOn = false;
 
 #define PIN_I2C2_SDA (GPIO_NUM_32)
 #define PIN_I2C2_SCL (GPIO_NUM_33)
+
+#define PIN_CAM_TX (GPIO_NUM_32)
+#define PIN_CAM_RX (GPIO_NUM_33)
 
 #define PIN_GPS_TX (GPIO_NUM_17)
 #define PIN_GPS_RX (GPIO_NUM_16)
@@ -276,6 +291,36 @@ const uint8_t (*im_cm)[4] = BEAR320x240_cm;
 
 uint8_t (*im_buf)[WIDTH][COMPONENTS] = 0;
 GFXcanvas8 *im;
+
+//////////////////////////////////////////////////////
+//// Camera
+//////////////////////////////////////////////////////
+#include <Adafruit_VC0706.h>
+#include "JPEGDEC.h"
+
+Adafruit_VC0706 cam = Adafruit_VC0706(&Serial1);
+JPEGDEC jpeg;
+
+#define MAX_ALLOWED_JPG_SIZE (32000)
+uint8_t jpg_img[MAX_ALLOWED_JPG_SIZE];
+uint16_t jpg_sz = 0;
+
+int drawMCUs(JPEGDRAW *pDraw) {
+  if (!im_buf) return 0;
+
+  int x = pDraw->x;
+  int y = pDraw->y;
+  int w = pDraw->iWidth;
+  int h = pDraw->iHeight;
+
+  for (int16_t i = 0; i < w; i++) {
+    for (int16_t j = 0; j < h; j++) {
+      uint16_t pval = pDraw->pPixels[i + j * w];
+      im_buf[y + j][x + i][0] = idx_nearest_colour((pval & 0xF800) >> 8, (pval & 0x07E0) >> 3, (pval & 0x001F) << 3);;
+    }
+  }
+  return 1;
+}
 
 //////////////////////////////////////////////////////
 //// WATCHDOG

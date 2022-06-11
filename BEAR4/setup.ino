@@ -26,6 +26,8 @@ void setup() {
   setup_dra818();
   Serial.println("GPS");
   setup_gps();
+  Serial.println("CAMERA");
+  setup_camera();
   Serial.println("SSTV");
   setup_sstv();
   // Will transmit boot message, ensure dra818 is ready

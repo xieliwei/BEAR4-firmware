@@ -25,6 +25,8 @@ void loop() {
   task_rtc();
   // Every APRS_mod_s (default was 30s)
   task_aprs();
+  // Every time minute is a multiple of SSTV_mod_m, but 1 minute earlier
+  task_camera();
   // Every time minute is a multiple of SSTV_mod_m
   task_sstv();
 
