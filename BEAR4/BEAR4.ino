@@ -127,6 +127,8 @@ bool wifiOn = false;
 #define PIN_RAD_EN (GPIO_NUM_35)
 #define PIN_RAD_PW (GPIO_NUM_20)
 #define PIN_RAD_SQL (GPIO_NUM_5)
+#define PIN_RAD_TX (GPIO_NUM_47)
+#define PIN_RAD_RX (GPIO_NUM_19)
 
 #define PIN_HEATER (GPIO_NUM_9)
 
@@ -151,6 +153,9 @@ bool wifiOn = false;
 
 #define PIN_I2C2_SDA (GPIO_NUM_15)
 #define PIN_I2C2_SCL (GPIO_NUM_16)
+
+#define PIN_GPS_TX (GPIO_NUM_37)
+#define PIN_GPS_RX (GPIO_NUM_36)
 #else
 #define PIN_DTR (GPIO_NUM_0)
 
@@ -158,6 +163,8 @@ bool wifiOn = false;
 #define PIN_RAD_EN (GPIO_NUM_4)
 #define PIN_RAD_PW (GPIO_NUM_12)
 #define PIN_RAD_SQL (GPIO_NUM_39)
+#define PIN_RAD_TX (GPIO_NUM_15)
+#define PIN_RAD_RX (GPIO_NUM_14)
 
 #define PIN_HEATER (GPIO_NUM_13)
 
@@ -181,6 +188,8 @@ bool wifiOn = false;
 #define PIN_I2C2_SDA (GPIO_NUM_32)
 #define PIN_I2C2_SCL (GPIO_NUM_33)
 
+#define PIN_GPS_TX (GPIO_NUM_17)
+#define PIN_GPS_RX (GPIO_NUM_16)
 #endif
 
 //////////////////////////////////////////////////////
@@ -204,7 +213,7 @@ bool wifiOn = false;
 #include <hal/dac_hal.h>
 #include <hal/dac_ll.h>
 #include <SoftwareSerial.h>
-SoftwareSerial radioCtrl(14, 15);
+SoftwareSerial radioCtrl(PIN_RAD_RX, PIN_RAD_TX);
 
 //////////////////////////////////////////////////////
 //// GPS

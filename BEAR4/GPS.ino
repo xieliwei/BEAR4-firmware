@@ -127,12 +127,12 @@ void setup_gps() {
   uint8_t gnss_tries = 4;
   do {
     Serial.println("GNSS: trying 460800 baud");
-    Serial2.begin(460800);
+    Serial2.begin(460800,SERIAL_8N1, PIN_GPS_RX, PIN_GPS_TX);
     if (myGNSS.begin(Serial2) == true) break;
 
     delay(100);
     Serial.println("GNSS: trying 9600 baud");
-    Serial2.begin(9600);
+    Serial2.begin(9600,SERIAL_8N1, PIN_GPS_RX, PIN_GPS_TX);
     if (myGNSS.begin(Serial2) == true) {
       Serial.println("GNSS: connected at 9600 baud, switching to 460800");
       myGNSS.setSerialRate(460800);
