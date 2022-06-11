@@ -368,6 +368,7 @@ private:
 class GFXcanvas16 : public Adafruit_GFX {
 public:
   GFXcanvas16(uint16_t w, uint16_t h);
+  GFXcanvas16(uint16_t w, uint16_t h, uint16_t *buf);
   ~GFXcanvas16(void);
   void drawPixel(int16_t x, int16_t y, uint16_t color);
   void fillScreen(uint16_t color);
@@ -390,6 +391,7 @@ protected:
 
 private:
   uint16_t *buffer;
+  bool externalBuffer;
 };
 
 #endif // _ADAFRUIT_GFX_H

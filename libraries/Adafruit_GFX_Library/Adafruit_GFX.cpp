@@ -2403,7 +2403,22 @@ GFXcanvas16::GFXcanvas16(uint16_t w, uint16_t h) : Adafruit_GFX(w, h) {
   uint32_t bytes = w * h * 2;
   if ((buffer = (uint16_t *)malloc(bytes))) {
     memset(buffer, 0, bytes);
+	externalBuffer = false;
   }
+}
+
+/**************************************************************************/
+/*!
+   @brief    Instatiate a GFX 16-bit canvas context for graphics with external buffer
+   @param    w   Display width, in pixels
+   @param    h   Display height, in pixels
+   @param    buf Pointer to buffer
+*/
+/**************************************************************************/
+GFXcanvas16::GFXcanvas16(uint16_t w, uint16_t h, uint16_t *buf) : Adafruit_GFX(w, h) {
+  uint32_t bytes = w * h * 2;
+  buffer = buf;
+  externalBuffer = true;
 }
 
 /**************************************************************************/
@@ -2412,7 +2427,7 @@ GFXcanvas16::GFXcanvas16(uint16_t w, uint16_t h) : Adafruit_GFX(w, h) {
 */
 /**************************************************************************/
 GFXcanvas16::~GFXcanvas16(void) {
-  if (buffer)
+  if (buffer && !externalBuffer)
     free(buffer);
 }
 
