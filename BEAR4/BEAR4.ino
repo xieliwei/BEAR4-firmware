@@ -33,6 +33,14 @@ String boot_message = "BEAR5 Project";
 #define LP_SLEEP_S  (12)
 #define HP_SLEEP_S  (2)
 
+// Which hardware revision? Currently 2 are available:
+// ESP32 (the original ESP32 with no suffix)
+// ESP32S3 (2022 release with built-in SRAM)
+// As long as you don't define HW_ESP32S3, we assume
+// you are on the original ESP32
+#define HW_ESP32
+//#define HW_ESP32S3
+
 //#define DBGPORT Serial
 #define DBGPORT udpstream
 
@@ -112,34 +120,66 @@ bool wifiOn = false;
 //////////////////////////////////////////////////////
 //// Pinmap
 //////////////////////////////////////////////////////
-#define PIN_DTR (0)
+#ifdef HW_ESP32S3
+#define PIN_DTR (GPIO_NUM_0)
 
-#define PIN_RAD_PTT (2)
-#define PIN_RAD_EN (4)
-#define PIN_RAD_PW (12)
-#define PIN_RAD_SQL (39)
+#define PIN_RAD_PTT (GPIO_NUM_48)
+#define PIN_RAD_EN (GPIO_NUM_35)
+#define PIN_RAD_PW (GPIO_NUM_20)
+#define PIN_RAD_SQL (GPIO_NUM_5)
 
-#define PIN_HEATER (13)
+#define PIN_HEATER (GPIO_NUM_9)
 
-#define PIN_I2C_SDA (21)
-#define PIN_I2C_SCL (22)
+#define PIN_I2C_SDA (GPIO_NUM_42)
+#define PIN_I2C_SCL (GPIO_NUM_2)
 
-#define PIN_TX_AUD (25)
-#define PIN_RX_AUD (26)
+#define PIN_TX_AUD (GPIO_NUM_17)
+// In newer revisions, this pin is swapped with ONEWIRE
+#define PIN_RX_AUD (GPIO_NUM_18)
 
-#define ADC_CELL1 (34)
-#define ADC_CELL2 (35)
+#define ADC_CELL1 (GPIO_NUM_6)
+#define ADC_CELL2 (GPIO_NUM_7)
 
 // Expansion Ports
-#define PIN_SPI_CS (5)
-#define PIN_SPI_CLK (18)
-#define PIN_SPI_MISO (19)
-#define PIN_SPI_MOSI (23)
+#define PIN_SPI_CS (GPIO_NUM_38)
+#define PIN_SPI_CLK (GPIO_NUM_39)
+#define PIN_SPI_MISO (GPIO_NUM_40)
+#define PIN_SPI_MOSI (GPIO_NUM_1)
 
-#define PIN_ONEWIRE (27)
+// In newer revisions, this pin is swapped with RX_AUD
+#define PIN_ONEWIRE (GPIO_NUM_8)
 
-#define PIN_I2C2_SDA (32)
-#define PIN_I2C2_SCL (33)
+#define PIN_I2C2_SDA (GPIO_NUM_15)
+#define PIN_I2C2_SCL (GPIO_NUM_16)
+#else
+#define PIN_DTR (GPIO_NUM_0)
+
+#define PIN_RAD_PTT (GPIO_NUM_2)
+#define PIN_RAD_EN (GPIO_NUM_4)
+#define PIN_RAD_PW (GPIO_NUM_12)
+#define PIN_RAD_SQL (GPIO_NUM_39)
+
+#define PIN_HEATER (GPIO_NUM_13)
+
+#define PIN_I2C_SDA (GPIO_NUM_21)
+#define PIN_I2C_SCL (GPIO_NUM_22)
+
+#define PIN_TX_AUD (GPIO_NUM_25)
+#define PIN_RX_AUD (GPIO_NUM_26)
+
+#define ADC_CELL1 (GPIO_NUM_34)
+#define ADC_CELL2 (GPIO_NUM_35)
+
+// Expansion Ports
+#define PIN_SPI_CS (GPIO_NUM_5)
+#define PIN_SPI_CLK (GPIO_NUM_18)
+#define PIN_SPI_MISO (GPIO_NUM_19)
+#define PIN_SPI_MOSI (GPIO_NUM_23)
+
+#define PIN_ONEWIRE (GPIO_NUM_27)
+
+#define PIN_I2C2_SDA (GPIO_NUM_32)
+#define PIN_I2C2_SCL (GPIO_NUM_33)
 
 //////////////////////////////////////////////////////
 //// APRS
