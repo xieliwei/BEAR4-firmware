@@ -29,10 +29,10 @@ void task_heater() {
     heaterOn = false;
   }
   // Battery likely won't have any capacity left when we've
-  // been up long enough to reach -20degC. Don't bother using
+  // been up long enough to reach -10degC. Don't bother using
   // heater as the voltage sag might kill us.
   // Battery won't survive -50degC, likely erronous reading
-  if (ptemp < -20.0 || ptemp < -50.0) {
+  if (btemp < -10.0 || btemp < -50.0) {
     digitalWrite(PIN_HEATER, LOW);
     heater_state = false;
     if (heaterOn) {
