@@ -25,8 +25,13 @@ inline uint8_t colour_lookup(uint8_t val, uint8_t comp) {
   }
 }
 
+#ifdef HW_ESP32S3
+#define ROBOT36_YSCAN_DELAY (269)
+#define ROBOT36_CSCAN_DELAY (268)
+#else
 #define ROBOT36_YSCAN_DELAY (261)
 #define ROBOT36_CSCAN_DELAY (260)
+#endif
 void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
   //wake_dra818();
   tune_dra818("145.5000");
