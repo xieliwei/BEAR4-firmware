@@ -17,8 +17,8 @@ void setup() {
 
   Serial.println("Battery");
   setup_battery();
-  
-  i2c_scanner();
+
+  //i2c_scanner();
 
   Serial.println("Sensors");
   setup_sensors();
