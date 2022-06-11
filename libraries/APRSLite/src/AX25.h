@@ -7,7 +7,7 @@
 #define HDLC_RESET 0x7F
 #define AX25_ESC   0x1B
 
-#define PREAMBLE_REPEATS 75
+#define PREAMBLE_REPEATS (75)
 
 #include "rom/crc.h"
 #define CRC_CCIT_INIT_VAL ((uint16_t)0xFFFF)
