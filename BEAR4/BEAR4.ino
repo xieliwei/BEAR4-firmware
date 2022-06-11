@@ -62,8 +62,8 @@ uint16_t msg_id = 0;
 
 // RTC
 uint16_t tyear = 2022;
-uint8_t tmonth = 11;
-uint8_t tday = 1;
+uint8_t tmonth = 6;
+uint8_t tday = 11;
 uint8_t thour = 0;
 uint8_t tmin = 0;
 uint8_t tsec = 0;
