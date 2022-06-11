@@ -146,6 +146,7 @@ void task_aprs() {
   //if (((tsec % APRS_mod_s) == 0) && (curr_time - last_time) >= ((APRS_mod_s * 1000) - 1000)) {
   if ((curr_time - last_time) >= (APRS_mod_s * 1000)) {
     send_report(use_gps);
+    DBGPORT.println("APRS sent");
     last_time = curr_time;
   }
 }
