@@ -79,6 +79,8 @@ bool take_photo() {
   DBGPORT.println("Img read!");
   imready = true;
 
+  cam.resumeVideo();
+
   return imready;
 }
 
