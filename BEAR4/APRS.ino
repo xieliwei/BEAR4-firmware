@@ -29,7 +29,7 @@ void send_report(bool use_gps) {
     tempf -= tempu8;
     tempf *= 60;
     tempu16 %= 91;
-    sz += sprintf((char*)&(packet[sz]), "%02d%02.2f", tempu8, tempf);
+    sz += sprintf((char*)&(packet[sz]), "%02d%05.2f", tempu8, tempf);
     packet[sz++] = tempb ? 'N' : 'S';
 
     // Main symbol table
@@ -42,7 +42,7 @@ void send_report(bool use_gps) {
     tempf -= tempu16;
     tempf *= 60;
     tempu16 %= 181;
-    sz += sprintf((char*)&(packet[sz]), "%03d%02.2f", tempu16, tempf);
+    sz += sprintf((char*)&(packet[sz]), "%03d%05.2f", tempu16, tempf);
     packet[sz++] = tempb ? 'E' : 'W';
 
     // Balloon symbol
@@ -101,10 +101,10 @@ void send_report(bool use_gps) {
   switch (page) {
     default:
     case 0:
-      sz += sprintf((char*)&(packet[sz]), "%.2fC %.2fhPa %.2fV %02dS", ptemp, ppress, BV, gSIV);
+      sz += sprintf((char*)&(packet[sz]), "%+07.2fC %07.2fhPa %+05.2fV %02dS", ptemp, ppress, BV, gSIV);
       break;
     case 1:
-      sz += sprintf((char*)&(packet[sz]), "%d %02d %0.2fV1 %0.2fV2 %c %.2fC", fixType, gPDOP % 100, Cell1, Cell2, heaterOn ? 'H' : 'X', btemp);
+      sz += sprintf((char*)&(packet[sz]), "%d %02d %05.2fV1 %05.2fV2 %c %+07.2fC", fixType, gPDOP % 100, Cell1, Cell2, heaterOn ? 'H' : 'X', btemp);
       break;
     case 2:
       sz += sprintf((char*)&(packet[sz]), "%+05dx %+05dy %+05dz %c %c", accel_x, accel_y, accel_z, freefall ? 'F' : 'X', heaterOn ? 'H' : 'X');
