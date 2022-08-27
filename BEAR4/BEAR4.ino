@@ -35,10 +35,12 @@ String boot_message = "BEAR6 Project";
 
 // Which hardware revision? Currently 2 are available:
 // ESP32 (the original ESP32 with no suffix)
+// ESP32S2 (2022 release with built-in SRAM, with support for siggen, but single core)
 // ESP32S3 (2022 release with built-in SRAM)
 // As long as you don't define HW_ESP32S3, we assume
 // you are on the original ESP32
 #define HW_ESP32
+//#define HW_ESP32S2
 //#define HW_ESP32S3
 
 //#define DBGPORT Serial
@@ -139,6 +141,47 @@ bool imready = false;
 #define PIN_RAD_PW (GPIO_NUM_20)
 #define PIN_RAD_SQL (GPIO_NUM_5)
 #define PIN_RAD_TX (GPIO_NUM_47)
+#define PIN_RAD_RX (GPIO_NUM_19)
+
+#define PIN_HEATER (GPIO_NUM_9)
+
+#define PIN_I2C_SDA (GPIO_NUM_42)
+#define PIN_I2C_SCL (GPIO_NUM_2)
+
+#define PIN_TX_AUD (GPIO_NUM_17)
+// In newer revisions, this pin is swapped with ONEWIRE
+#define PIN_RX_AUD (GPIO_NUM_18)
+
+#define ADC_CELL1 (GPIO_NUM_6)
+#define ADC_CELL2 (GPIO_NUM_7)
+
+// Expansion Ports
+#define PIN_SPI_CS (GPIO_NUM_38)
+#define PIN_SPI_CLK (GPIO_NUM_39)
+#define PIN_SPI_MISO (GPIO_NUM_40)
+#define PIN_SPI_MOSI (GPIO_NUM_1)
+
+// In newer revisions, this pin is swapped with RX_AUD
+#define PIN_ONEWIRE (GPIO_NUM_8)
+
+#define PIN_I2C2_SDA (GPIO_NUM_15)
+#define PIN_I2C2_SCL (GPIO_NUM_16)
+
+#define PIN_CAM_TX (GPIO_NUM_15)
+#define PIN_CAM_RX (GPIO_NUM_16)
+
+#define PIN_GPS_TX (GPIO_NUM_37)
+#define PIN_GPS_RX (GPIO_NUM_36)
+#elif defined(HW_ESP32S2)
+// Oddly Serial2 not declared in ESP32S2
+HardwareSerial Serial2(2);
+#define PIN_DTR (GPIO_NUM_0)
+
+#define PIN_RAD_PTT (GPIO_NUM_34)
+#define PIN_RAD_EN (GPIO_NUM_35)
+#define PIN_RAD_PW (GPIO_NUM_20)
+#define PIN_RAD_SQL (GPIO_NUM_5)
+#define PIN_RAD_TX (GPIO_NUM_33)
 #define PIN_RAD_RX (GPIO_NUM_19)
 
 #define PIN_HEATER (GPIO_NUM_9)
