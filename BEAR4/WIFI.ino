@@ -4,7 +4,7 @@ void setup_wifi() {
   IPAddress ipaddr = WiFi.softAPIP();
   Serial.print("IP: ");
   Serial.println(ipaddr);
-  DynamicArduinoOTA.setHostname("BEAR5");
+  DynamicArduinoOTA.setHostname("BEAR6");
 
   DynamicArduinoOTA
   .onStart([]() {
