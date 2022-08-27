@@ -16,7 +16,7 @@ uint32_t SSTV_inhibit_time_ms = 1200000L; // 20 minutes
 String callsign = "9V1UP";
 String callsign_suffix = "-11";
 uint8_t callsign_ssid = 11;
-String comment_suffix = "SSTV@145.500M";
+String comment_suffix = "SSTV@145.550M";
 
 String boot_message = "BEAR6 Project";
 

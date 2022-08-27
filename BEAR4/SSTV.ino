@@ -34,7 +34,7 @@ inline uint8_t colour_lookup(uint8_t val, uint8_t comp) {
 #endif
 void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
   //wake_dra818();
-  tune_dra818("145.5000");
+  tune_dra818("145.5500");
   digitalWrite(PIN_RAD_PTT, LOW);
   delay(500);
   // VOX Signal
