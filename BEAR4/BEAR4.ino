@@ -53,7 +53,7 @@ String boot_message = "BEAR6 Project";
 const char* wifissid = "BEAR6";
 const char* wifipsk = "flyinghigh";
 // How long we keep the AP on before shutdown
-#define WIFI_TIMEOUT 60000
+#define WIFI_TIMEOUT 90000
 #define DEBUG_SERIAL_PORT 54321
 
 // RBF - Set this to false before flight
