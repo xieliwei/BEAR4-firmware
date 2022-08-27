@@ -57,7 +57,7 @@ const char* wifipsk = "flyinghigh";
 #define DEBUG_SERIAL_PORT 54321
 
 // RBF - Set this to false before flight
-bool sstv_run_now = false;
+bool sstv_run_now = true;
 
 // RBF - Set this to true before flight
 bool inhibit_sstv = true;
