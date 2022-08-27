@@ -124,8 +124,10 @@ void send_report(bool use_gps) {
   //wake_dra818();
   // Adjust path depending on altitude)
   if (thealti > 2000) {
+    APRS_setPath1("WIDE2", 1);
     APRS_sendPkt(packet, sz, 3);
   } else {
+    APRS_setPath1("WIDE1", 1);
     APRS_sendPkt(packet, sz, 4);
   }
   //sleep_dra818();
