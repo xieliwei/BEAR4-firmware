@@ -19,7 +19,7 @@ int DST_SSID = 0;
 char PATH1[7] = "WIDE1";
 int PATH1_SSID = 1;
 char PATH2[7] = "WIDE2";
-int PATH2_SSID = 2;
+int PATH2_SSID = 1;
 
 AX25Call path[4];
 
