@@ -13,6 +13,7 @@ void send_report(bool use_gps) {
   float tempf;
   //  String temps;
 
+  static float last_alti = 0;
   float thealti = 0;
 
   packet[sz++] = use_gps ? '@' : '>';
@@ -131,6 +132,18 @@ void send_report(bool use_gps) {
     APRS_sendPkt(packet, sz, 4);
   }
   //sleep_dra818();
+
+  // Check if we have been descending for a long time
+  // Turn on fast SSTV if we are falling
+  if (last_alti > thealti) {
+    descent_count++;
+    if (descent_count >= 6) {
+      fast_sstv = true;
+    }
+  } else {
+    descent_count = 0;
+  }
+  last_alti = thealti;
 }
 
 void task_aprs() {

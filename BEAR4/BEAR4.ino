@@ -68,6 +68,10 @@ bool fast_sstv = false;
 //////////////////////////////////////////////////////
 //// Global State
 //////////////////////////////////////////////////////
+// Stores how many consecutive APRS reports
+// were giving descending altitudes
+uint8_t descent_count = 0;
+
 // APRS
 uint16_t msg_id = 0;
 
