@@ -62,6 +62,9 @@ bool sstv_run_now = true;
 // RBF - Set this to true before flight
 bool inhibit_sstv = true;
 
+// RBF - Set this to false before flight
+bool fast_sstv = false;
+
 //////////////////////////////////////////////////////
 //// Global State
 //////////////////////////////////////////////////////

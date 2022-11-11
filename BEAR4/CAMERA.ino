@@ -89,7 +89,7 @@ void task_camera() {
   static unsigned long last_time = 0;
 
   // This condition mirrors that of the SSTV module but modified to run 1 minute earlier
-  if (sstv_run_now || (!inhibit_sstv && ((((tmin + 1) % SSTV_mod_m) == 0) && (curr_time - last_time) >= ((SSTV_mod_m * 60000L) - 60000L)))) {
+  if (sstv_run_now || (!inhibit_sstv && fast_sstv) || (!inhibit_sstv && ((((tmin + 1) % SSTV_mod_m) == 0) && (curr_time - last_time) >= ((SSTV_mod_m * 60000L) - 60000L)))) {
     take_photo();
     last_time = curr_time;
   }

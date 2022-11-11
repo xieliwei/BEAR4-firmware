@@ -206,7 +206,7 @@ void task_sstv() {
   if (!use_gps) inhibit_sstv = true;
 
   // This condition is replicated at the CAMERA module as well
-  if (im_buf && (sstv_run_now || (!inhibit_sstv && (((tmin % SSTV_mod_m) == 0) && (curr_time - last_time) >= ((SSTV_mod_m * 60000L) - 60000L))))) {
+  if (im_buf && (sstv_run_now || (!inhibit_sstv && fast_sstv) || (!inhibit_sstv && (((tmin % SSTV_mod_m) == 0) && (curr_time - last_time) >= ((SSTV_mod_m * 60000L) - 60000L))))) {
     char sbuf[128] = {0};
     if(!imready || !decode_jpg()) {
       memcpy(im_buf, im_ref, WIDTH * HEIGHT * COMPONENTS);
