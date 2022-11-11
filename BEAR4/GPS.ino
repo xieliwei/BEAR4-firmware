@@ -208,6 +208,9 @@ void setup_gps() {
   // Tell the module to return UBX_MGA_ACK_DATA0 messages when we push the AssistNow data
   myGNSS.setAckAiding(1);
 
+  // Push the almanac and ephemeris
+  myGNSS.pushAssistNowData(true, assistnowonline_dat, assistnowonline_sz, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
+
   // Push the AssistNow data for today.
   myGNSS.pushAssistNowData(todayStart, true, payload, tomorrowStart - todayStart, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
 
