@@ -185,8 +185,8 @@ void setup_gps() {
     Serial.println("Could not find the data for today. This will not work well. The GNSS needs help to start up quickly.");
   }
 
-  // Find the start of tomorrow's data
-  tomorrowStart = myGNSS.findMGAANOForDate(payload, (size_t)payloadSize, todays_date[0], todays_date[1], todays_date[2], 1);
+  // Find the start of day-after-tomorrow's data
+  tomorrowStart = myGNSS.findMGAANOForDate(payload, (size_t)payloadSize, todays_date[0], todays_date[1], todays_date[2], 2);
   if (tomorrowStart < (size_t)payloadSize) {
     //Serial.print(F("Found the data for tomorrow starting at location "));
     //Serial.println(tomorrowStart);
