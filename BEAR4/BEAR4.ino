@@ -18,7 +18,7 @@ String callsign_suffix = "-11";
 uint8_t callsign_ssid = 11;
 String comment_suffix = "SSTV@145.550M";
 
-String boot_message = "BEAR6 Project";
+String boot_message = "BEAR7 Project";
 
 #define TEMP_SP_HIGH_DEGC (7.0)
 #define TEMP_SP_LOW_DEGC (2.0)
@@ -49,8 +49,8 @@ String boot_message = "BEAR6 Project";
 // NOTE - This will be visible in source control,
 // don't use anything serious here!
 // Default IP of the device in softAP mode is:
-//    192.168.4.1 or BEAR6.local
-const char* wifissid = "BEAR6";
+//    192.168.4.1 or BEAR7.local
+const char* wifissid = "BEAR7";
 const char* wifipsk = "flyinghigh";
 // How long we keep the AP on before shutdown
 #define WIFI_TIMEOUT 90000

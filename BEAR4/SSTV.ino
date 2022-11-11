@@ -220,7 +220,7 @@ void task_sstv() {
 
     im->setCursor(194, 207);
     im->setTextSize(4);
-    im->print("BEAR6");
+    im->print("BEAR7");
 
     // We start custom output at 150x35
     // That gives us 170x65 (without belly) or 170x135 of usable space
