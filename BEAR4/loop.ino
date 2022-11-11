@@ -50,7 +50,7 @@ void loop() {
 
   // Cyclic sleep: HP_SLEEP_S of wake time, LP_SLEEP_S of sleep
   // WiFi inhibits sleep, only do cyclic sleep when WiFi has deactivated
-  if (!wifiOn && ((curr_time - last_time) > (HP_SLEEP_S * 1000))) {
+  if (!wifiOn && ((curr_time - last_time) > (HP_SLEEP_S * 1000)) && LP_SLEEP_S > 0) {
     DBGPORT.print(millis());
     DBGPORT.println(": Going to sleep");
     Serial.flush();

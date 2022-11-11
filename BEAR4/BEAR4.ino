@@ -30,8 +30,8 @@ String boot_message = "BEAR7 Project";
 // to be less than 7.5s
 // Ideally we need to have at least 1s of wake time
 // so we can properly catch a full GPS PVT report
-#define LP_SLEEP_S  (12)
-#define HP_SLEEP_S  (2)
+#define LP_SLEEP_S  (0)
+#define HP_SLEEP_S  (3600)
 
 // Which hardware revision? Currently 2 are available:
 // ESP32 (the original ESP32 with no suffix)
