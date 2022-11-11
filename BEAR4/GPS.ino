@@ -212,5 +212,5 @@ void setup_gps() {
   myGNSS.pushAssistNowData(todayStart, true, payload, tomorrowStart - todayStart, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
 
   // Set aggressive power saving (1Hz)
-  set_ublox_pms(0x03);
+  //set_ublox_pms(0x03);
 }
