@@ -49,38 +49,60 @@ bool take_photo() {
   imready = false;
   if (!jpg_img) return imready;
 
-  if (!cam.takePicture()) {
-    DBGPORT.println("Failed to snap!");
-    return imready;
+  uint8_t tries = 3;
+  while (tries--) {
+    DBGPORT.print(tries);
+    DBGPORT.println(" tries left");
+
+    if (!cam.takePicture()) {
+      DBGPORT.println("Failed to snap!");
+      cam.resumeVideo();
+      continue;
+    }
+
+    // Get the size of the image (frame) taken
+    jpg_sz = cam.frameLength();
+    DBGPORT.print(jpg_sz, DEC);
+    DBGPORT.println(" byte image");
+
+    if (!jpg_sz) {
+      DBGPORT.println("Img size 0!");
+      cam.resumeVideo();
+      continue;
+    }
+
+    // Since we use pre-allocated memory, the maximum size is fixed
+    if (jpg_sz > MAX_ALLOWED_JPG_SIZE) {
+      DBGPORT.println("Img size too big!");
+      cam.resumeVideo();
+      continue;
+    }
+
+    uint16_t remaining = jpg_sz;
+    uint8_t *jpg_img_p = jpg_img;
+    while (remaining) {
+      uint8_t *buf;
+      uint8_t bytesToRead = min((uint16_t)64, remaining);
+      buf = cam.readPicture(bytesToRead);
+      // buf can be null if there was an error reading the picture
+      if (!buf) {
+        cam.resumeVideo();
+        break;
+      }
+      memcpy(jpg_img_p, buf, bytesToRead);
+      jpg_img_p += bytesToRead;
+      remaining -= bytesToRead;
+    }
+
+    if (!remaining) {
+      DBGPORT.println("Img read!");
+      imready = true;
+      cam.resumeVideo();
+      break;
+    }
+
+    cam.resumeVideo();
   }
-
-  // Get the size of the image (frame) taken
-  jpg_sz = cam.frameLength();
-  DBGPORT.print(jpg_sz, DEC);
-  DBGPORT.println(" byte image");
-
-  // Since we use pre-allocated memory, the maximum size is fixed
-  if (jpg_sz > MAX_ALLOWED_JPG_SIZE) {
-    DBGPORT.println("Img size too big!");
-    return imready;
-  }
-
-  uint16_t remaining = jpg_sz;
-  uint8_t *jpg_img_p = jpg_img;
-  while (remaining) {
-    uint8_t *buf;
-    uint8_t bytesToRead = min((uint16_t)64, remaining);
-    buf = cam.readPicture(bytesToRead);
-    memcpy(jpg_img_p, buf, bytesToRead);
-    jpg_img_p += bytesToRead;
-    remaining -= bytesToRead;
-  }
-
-  DBGPORT.println("Img read!");
-  imready = true;
-
-  cam.resumeVideo();
-
   return imready;
 }
 
