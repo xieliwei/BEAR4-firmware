@@ -10,7 +10,7 @@ bool is_leap_year = false;
 uint8_t APRS_mod_s = 30;
 
 uint8_t SSTV_mod_m = 5;
-uint16_t SSTV_inhibit_height_m = 5000;
+uint16_t SSTV_inhibit_height_m = 3000;
 uint32_t SSTV_inhibit_time_ms = 1200000L; // 20 minutes
 
 String callsign = "9V1UP";
