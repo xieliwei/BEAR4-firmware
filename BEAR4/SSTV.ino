@@ -205,7 +205,7 @@ void task_sstv() {
   /////////////////////////////////////////////////////////////////////////////////
   // No matter what, if the GPS is not functioning, we don't SSTV to give GPS a chance to lock on
   //UNCOMMENT BEFORE FLIGHT
-  //if (!use_gps) inhibit_sstv = true;
+  if (!use_gps) inhibit_sstv = true;
 
 
 
@@ -233,11 +233,13 @@ void task_sstv() {
 
 ////////////////////////////////////////////////
     //test parameters
+
     //uint16_t test_altitude=30000;
-    uint16_t test_heading=100;
-    uint16_t test_speed=100;
-    uint16_t test_temp=-10;
+    //uint16_t test_heading=100;
+    //uint16_t test_speed=100;
+    //uint16_t test_temp=-10;
     //uint16_t test_press=1000;
+    
 ////////////////////////////////////////////
 
 

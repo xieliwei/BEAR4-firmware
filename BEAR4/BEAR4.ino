@@ -12,7 +12,7 @@ bool is_leap_year = false;
 uint8_t APRS_mod_s = 30;
 
 uint8_t SSTV_mod_m = 2.5; //Interval for sstv
-uint16_t SSTV_inhibit_height_m = 0; //Altitude where SSTV will begin Tx after crossing during ascent, set to 3000m pls
+uint16_t SSTV_inhibit_height_m =2000; //Altitude where SSTV will begin Tx after crossing during ascent, set to 3000m pls
 uint32_t SSTV_inhibit_time_ms = 1200000L; // 20 minutes this is is milliseconds
 
 String callsign = "9V1UP";
