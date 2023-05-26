@@ -161,15 +161,9 @@ void setup_gps() {
     Serial.print("GNSS: dynamic model is ");
     Serial.println(newDynamicModel);
   }
+
+
   
-  rate = myGNSS.getMeasurementRate(); //Get the measurement rate of this module
-  Serial.print("New measurement interval (ms): ");
-  Serial.println(rate);
-
-  rate = myGNSS.getNavigationRate(); //Get the navigation rate of this module
-  Serial.print("New navigation ratio (cycles): ");
-  Serial.println(rate);
-
   myGNSS.setNavigationFrequency(1);
   myGNSS.setAutoPVT(true);
   myGNSS.saveConfiguration(); //Save the current settings to flash and BBR
