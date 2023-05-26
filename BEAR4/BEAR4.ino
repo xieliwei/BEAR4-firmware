@@ -5,15 +5,15 @@
 //////////////////////////////////////////////////////
 // !!!!!!! Check all RBF items before flight !!!!!!!
 // Note that this needs to be UTC
-uint16_t todays_date[] = {2022, 11, 12};
+uint16_t todays_date[] = {2023, 26, 05};
 uint16_t todays_time[] = {0, 0, 0};
 bool is_leap_year = false;
 
 uint8_t APRS_mod_s = 30;
 
-uint8_t SSTV_mod_m = 2.5; //Interval for sstv
-uint16_t SSTV_inhibit_height_m =2000; //Altitude where SSTV will begin Tx after crossing during ascent, set to 3000m pls
-uint32_t SSTV_inhibit_time_ms = 1200000L; // 20 minutes this is is milliseconds
+uint8_t SSTV_mod_m = 2; //Interval for sstv
+uint16_t SSTV_inhibit_height_m =0; //Altitude where SSTV will begin Tx after crossing during ascent, set to 3000m pls
+uint32_t SSTV_inhibit_time_ms = 0L; // 20 minutes this is is milliseconds
 
 String callsign = "9V1UP";
 String callsign_suffix = "-11";
@@ -67,8 +67,6 @@ bool inhibit_sstv = false;
 // RBF - Set this to false before flight
 bool fast_sstv = false;
 
-//RBF- set this to false before flight
-bool slow_sstv=false;
 
 //////////////////////////////////////////////////////
 //// Global State
@@ -76,15 +74,15 @@ bool slow_sstv=false;
 // Stores how many consecutive APRS reports
 // were giving descending altitudes
 uint8_t descent_count = 0;
-uint8_t switch_altitude_count=0;
+
 
 // APRS
 uint16_t msg_id = 0;
 
 // RTC
-uint16_t tyear = 2022;
-uint8_t tmonth = 11;
-uint8_t tday = 12;
+uint16_t tyear = 2023;
+uint8_t tmonth = 05;
+uint8_t tday = 26;
 uint8_t thour = 0;
 uint8_t tmin = 0;
 uint8_t tsec = 0;
@@ -125,7 +123,9 @@ uint16_t gPDOP = 99;
 float accel_x;
 float accel_y;
 float accel_z;
-float gyro_x,gyro_y,gyro_z;
+float gyro_x;
+float gyro_y;
+float gyro_z;
 bool freefall = false;
 
 
@@ -326,14 +326,8 @@ SFE_UBLOX_GNSS myGNSS;
 #include "I2Cdev.h"
 #include <Wire.h>
 
-
-
-
-
-
 #include <Adafruit_MPU6050.h>
 #include <BMP388_DEV.h>
-#include "MPU9250.h"
 
 BMP388_DEV bmp388;
 

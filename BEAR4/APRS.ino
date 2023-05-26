@@ -133,10 +133,7 @@ void send_report(bool use_gps) {
   }
   //sleep_dra818();
 
-  
-
-  
-  //Check if we have been descending for a long time
+  // Check if we have been descending for a long time
   // Turn on fast SSTV if we are falling
   if (last_alti > thealti) {
     descent_count++;
@@ -147,20 +144,6 @@ void send_report(bool use_gps) {
     descent_count = 0;
   }
   last_alti = thealti;
-  //SSTV will change from 2.5mins intervals to 5mins intervals on ascent
-  //and condition so it doesn't change back to 2.5mins during descent(FAST SSTV)
-  // using GPS variable because it is a constant.
-
-  if (galtitudeMSL>20000 && fast_sstv==false){ 
-    switch_altitude_count++;
-    if (switch_altitude_count>=6){
-      
-      SSTV_mod_m = 5;
-    }
-    else{
-      switch_altitude_count=0;
-    }
-  }
 }
 
 void task_aprs() {

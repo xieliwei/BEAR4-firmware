@@ -8,32 +8,23 @@ void loop() {
   // WARNING - Task order does matter!
   // NOTE - Actual task running rate will be
   // affected by cyclic sleep.
-
-
   // Every 10000ms for 60s
   // With always-running worker when Wi-Fi is active
-  task_wifi(); 
-
+  task_wifi();
   // Every 5000ms
   task_sensors();
-  
   // Every 5000ms
   // With always-running safeties
   task_heater();
-  
   // Every 5000ms
   task_battery();
-  
   // Every 5000ms
   // With always-running parser
   task_gps();
-  
-  // Every 250ms so we can have 1s accuracy  
+  // Every 250ms so we can have 1s accuracy
   task_rtc();
-
   // Every APRS_mod_s (default was 30s)
   task_aprs();
-  
   // Every time minute is a multiple of SSTV_mod_m, but 1 minute earlier
   task_camera();
   // Every time minute is a multiple of SSTV_mod_m

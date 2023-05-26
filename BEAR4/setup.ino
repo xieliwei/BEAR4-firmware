@@ -38,11 +38,12 @@ void setup() {
   setup_aprs();
 
   // Unused pins for expansion ports
-  pinMode(PIN_SPI_CS, OUTPUT); //SET TO LOW TO SELECT DEVICE;
+  pinMode(PIN_SPI_CS, OUTPUT);
   digitalWrite(PIN_SPI_CS, HIGH);
   pinMode(PIN_SPI_CLK, INPUT);
   pinMode(PIN_SPI_MISO, INPUT);
   pinMode(PIN_SPI_MOSI, INPUT);
+
   
   pinMode(PIN_ONEWIRE, INPUT);
 

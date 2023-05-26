@@ -63,10 +63,13 @@ void task_sensors() {
     //Serial.println(az);
 
     //RAW GYRO VALUES (RAD/S)+/- zero rate offset
-    float gx = g.gyro.x - 0.0090;
-    float gy = g.gyro.y - 0.0377;
-    float gz = g.gyro.z + 0.0074;
+    //float gx = g.gyro.x - 0.0090;
+    //float gy = g.gyro.y - 0.0377;
+    //float gz = g.gyro.z + 0.0074;
 
+    //gyro_x=gx;
+    //gyro_y=gy;
+    //gyro_z=gz;
   
 
 

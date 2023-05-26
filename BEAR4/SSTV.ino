@@ -205,7 +205,7 @@ void task_sstv() {
   /////////////////////////////////////////////////////////////////////////////////
   // No matter what, if the GPS is not functioning, we don't SSTV to give GPS a chance to lock on
   //UNCOMMENT BEFORE FLIGHT
-  if (!use_gps) inhibit_sstv = true;
+  if (!use_gps) inhibit_sstv = false;
 
 
 
@@ -257,7 +257,7 @@ void task_sstv() {
     // Line 2: coords
     
     im->setCursor(0, 16);
-    sprintf(sbuf, "%.5f,%.5f", glatitude, glongitude);
+    sprintf(sbuf, "%.5f,%.5f,%ikm/h", glatitude, glongitude,gspeed);
     im->print(sbuf);
     
 
@@ -269,13 +269,7 @@ void task_sstv() {
     im->setCursor(45,222);
     sprintf(sbuf, "%im", galtitudeMSL);
     //sprintf(sbuf, "%im", test_altitude);
-    im->print(sbuf);
-
-    //speed
-    //im->setCursor(235,115);
-    //sprintf(sbuf,"%ikm/h",gspeed);
-    //sprintf(sbuf,"%ikm/h",test_speed);
-    //im->print(sbuf);   
+    im->print(sbuf);   
 
     //Line 5: Temp
     im->setCursor(0,222);
