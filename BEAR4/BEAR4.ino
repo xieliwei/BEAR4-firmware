@@ -9,7 +9,7 @@ uint16_t todays_date[] = {2023, 26, 05};
 uint16_t todays_time[] = {0, 0, 0};
 bool is_leap_year = false;
 
-uint8_t APRS_mod_s = 30;
+uint8_t APRS_mod_s =41;
 
 uint8_t SSTV_mod_m = 2; //Interval for sstv
 uint16_t SSTV_inhibit_height_m =0; //Altitude where SSTV will begin Tx after crossing during ascent, set to 3000m pls
