@@ -1,5 +1,3 @@
-
-
 //////////////////////////////////////////////////////
 //// Globals/Config
 //////////////////////////////////////////////////////
@@ -9,11 +7,11 @@ uint16_t todays_date[] = {2023, 5, 27};
 uint16_t todays_time[] = {22, 45, 0};
 bool is_leap_year = false;
 
-uint8_t APRS_mod_s =45;
+uint8_t APRS_mod_s = 30;
 
-uint8_t SSTV_mod_m = 3; //Interval for sstv
-uint16_t SSTV_inhibit_height_m =0; //Altitude where SSTV will begin Tx after crossing during ascent, set to 3000m pls
-uint32_t SSTV_inhibit_time_ms = 0L; // 20 minutes this is is milliseconds
+uint8_t SSTV_mod_m = 3;
+uint16_t SSTV_inhibit_height_m = 3000;
+uint32_t SSTV_inhibit_time_ms = 1200000L; // 20 minutes
 
 String callsign = "9V1UP";
 String callsign_suffix = "-11";
@@ -67,7 +65,6 @@ bool inhibit_sstv = false;
 // RBF - Set this to false before flight
 bool fast_sstv = false;
 
-
 //////////////////////////////////////////////////////
 //// Global State
 //////////////////////////////////////////////////////
@@ -75,14 +72,13 @@ bool fast_sstv = false;
 // were giving descending altitudes
 uint8_t descent_count = 0;
 
-
 // APRS
 uint16_t msg_id = 0;
 
 // RTC
 uint16_t tyear = 2023;
-uint8_t tmonth = 05;
-uint8_t tday = 26;
+uint8_t tmonth = 5;
+uint8_t tday = 27;
 uint8_t thour = 0;
 uint8_t tmin = 0;
 uint8_t tsec = 0;
@@ -116,25 +112,16 @@ uint8_t gSIV = 0;       // Number of SVs used for fix
 uint16_t gPDOP = 99;
 
 // Sensors
-//int16_t accel_x = 0;    // Sensor's unit (average of 16-bits)
-//int16_t accel_y = 0;    // Sensor's unit (average of 16-bits)
-//int16_t accel_z = 0;    // Sensor's unit (average of 16-bits)
-
-float accel_x;
-float accel_y;
-float accel_z;
-float gyro_x;
-float gyro_y;
-float gyro_z;
+int16_t accel_x = 0;    // Sensor's unit (average of 16-bits)
+int16_t accel_y = 0;    // Sensor's unit (average of 16-bits)
+int16_t accel_z = 0;    // Sensor's unit (average of 16-bits)
 bool freefall = false;
 
-
-float local_QNH=1013.25; //in HPa
-float ptemp;        // DegC
-float ppress;       // hPa
+float ptemp = 0;        // DegC
+float ppress = 0;       // hPa
 float paltitudeMSL = 0; // Metres
 
-float btemp;        // DegC
+float btemp = 0;        // DegC
 
 // Battery
 float Cell1 = 0.0;      // Volts
@@ -149,11 +136,6 @@ bool wifiOn = false;
 
 // Camera
 bool imready = false;
-
-
-
-
-
 
 //////////////////////////////////////////////////////
 //// Pinmap
@@ -185,8 +167,6 @@ bool imready = false;
 #define PIN_SPI_CLK (GPIO_NUM_39)
 #define PIN_SPI_MISO (GPIO_NUM_40)
 #define PIN_SPI_MOSI (GPIO_NUM_1)
-
-
 
 // In newer revisions, this pin is swapped with RX_AUD
 #define PIN_ONEWIRE (GPIO_NUM_8)
@@ -279,8 +259,6 @@ HardwareSerial Serial2(2);
 #define PIN_GPS_RX (GPIO_NUM_16)
 #endif
 
-
-
 //////////////////////////////////////////////////////
 //// APRS
 //////////////////////////////////////////////////////
@@ -325,8 +303,7 @@ SFE_UBLOX_GNSS myGNSS;
 //////////////////////////////////////////////////////
 #include "I2Cdev.h"
 #include <Wire.h>
-
-#include <Adafruit_MPU6050.h>
+#include "MPU6050.h"
 #include <BMP388_DEV.h>
 
 BMP388_DEV bmp388;
@@ -334,9 +311,7 @@ BMP388_DEV bmp388;
 #define SEN_AVG_LEN 1000
 //int16_t ax[SEN_AVG_LEN], ay[SEN_AVG_LEN], az[SEN_AVG_LEN];
 //int16_t gx[SEN_AVG_LEN], gy[SEN_AVG_LEN], gz[SEN_AVG_LEN];
-
-//MPU6050 accelgyro; (commented out)
-Adafruit_MPU6050 mpu;
+MPU6050 accelgyro;
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -376,7 +351,7 @@ GFXcanvas8 *im;
 Adafruit_VC0706 cam = Adafruit_VC0706(&Serial1);
 JPEGDEC jpeg;
 
-#define MAX_ALLOWED_JPG_SIZE (32000) //SIZE OF JPEG IN BYTES DEFINED
+#define MAX_ALLOWED_JPG_SIZE (32000)
 uint8_t jpg_img[MAX_ALLOWED_JPG_SIZE];
 uint16_t jpg_sz = 0;
 

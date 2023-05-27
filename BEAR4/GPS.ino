@@ -47,10 +47,10 @@ void task_gps() {
     bool use_gps_time = false;
     //if (fixType == 0) use_gps_time = false;        // No Fix
     //else if (fixType == 1) use_gps_time = false;   // Dead reckoning
-    if (fixType == 2) use_gps_time = false;         // 2D
-    else if (fixType == 3) use_gps_time = false;    // 3D
-    else if (fixType == 4) use_gps_time = false;    // GNSS + Dead reckoning
-    else if (fixType == 5) use_gps_time = false;    // Time only
+    if (fixType == 2) use_gps_time = true;         // 2D
+    else if (fixType == 3) use_gps_time = true;    // 3D
+    else if (fixType == 4) use_gps_time = true;    // GNSS + Dead reckoning
+    else if (fixType == 5) use_gps_time = true;    // Time only
 
     if (use_gps_time) {
       tyear = myGNSS.getYear();
@@ -69,7 +69,7 @@ void task_gps() {
     galtitudeMSL = (float)myGNSS.getAltitudeMSL() / 1000;
 
     gheading = myGNSS.getHeading() / 100000;
-    gspeed = (float)myGNSS.getGroundSpeed() /277.8;
+    gspeed = (float)myGNSS.getGroundSpeed() * 3600 / 1000000;
 
     gSIV = myGNSS.getSIV();
     gPDOP = myGNSS.getPDOP() / 100;
@@ -149,8 +149,7 @@ void setup_gps() {
 
   // Possible values are:
   // PORTABLE, STATIONARY, PEDESTRIAN, AUTOMOTIVE, SEA, AIRBORNE1g, AIRBORNE2g, AIRBORNE4g, WRIST, BIKE
-  
-  if (myGNSS.setDynamicModel(DYN_MODEL_AIRBORNE1g) == false) {
+  if (myGNSS.setDynamicModel(DYN_MODEL_AIRBORNE2g) == false) {
     Serial.println("GNSS: dynamic platform setting failed");
   }
   // Let's read the new dynamic model to see if it worked
@@ -161,13 +160,11 @@ void setup_gps() {
     Serial.print("GNSS: dynamic model is ");
     Serial.println(newDynamicModel);
   }
-
-
   
   myGNSS.setNavigationFrequency(1);
   myGNSS.setAutoPVT(true);
   myGNSS.saveConfiguration(); //Save the current settings to flash and BBR
-/*
+
   //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Find where the AssistNow data for today starts and ends
   uint16_t payloadSize = assistnow_sz;
@@ -177,7 +174,7 @@ void setup_gps() {
   size_t tomorrowStart = (size_t)payloadSize;
 
   // Uncomment the next line to enable the 'major' debug messages on Serial so you can see what AssistNow data is being sent
-  //myGNSS.enableDebugging(Serial, true);++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //myGNSS.enableDebugging(Serial, true);
 
   // Find the start of today's data
   todayStart = myGNSS.findMGAANOForDate(payload, (size_t)payloadSize, todays_date[0], todays_date[1], todays_date[2]);
@@ -222,5 +219,4 @@ void setup_gps() {
 
   // Set aggressive power saving (1Hz)
   //set_ublox_pms(0x03);
-*/
 }

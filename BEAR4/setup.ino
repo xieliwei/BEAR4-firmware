@@ -4,13 +4,10 @@ void setup() {
 
   // Bug fix, pullup DTR so we can boot properly if we reset
   pinMode(PIN_DTR, INPUT_PULLUP);
-  
 
-  
   setup_heater();
 
   Serial.begin(115200);
-  
 
   Serial.println("Wifi");
   setup_wifi();
@@ -44,14 +41,11 @@ void setup() {
   pinMode(PIN_SPI_MISO, INPUT);
   pinMode(PIN_SPI_MOSI, INPUT);
 
-  
   pinMode(PIN_ONEWIRE, INPUT);
 
   Serial.println("Bootup complete");
   tickle_watchdog();
-
 }
-
 
 void i2c_scanner() {
   DBGPORT.println();
@@ -74,4 +68,3 @@ void i2c_scanner() {
   DBGPORT.print(String(count, DEC));
   DBGPORT.println(" device(s).");
 }
-
