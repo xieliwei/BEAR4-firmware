@@ -185,7 +185,7 @@ void task_sstv() {
   unsigned long curr_time = millis();
   static unsigned long last_time = 0;
 
-  // Only allow SSTV after SSTV_inhibit_height_m height
+  // Only allow SSTV after SSTV_inhibit_height_m height, can put in extra condition where baro height is taken instead of GPS height.
   if (galtitudeMSL > SSTV_inhibit_height_m || paltitudeMSL > SSTV_inhibit_height_m) {
     inhibit_sstv = false;
   }
@@ -202,54 +202,85 @@ void task_sstv() {
   else if (fixType == 4) use_gps = true;    // GNSS + Dead reckoning
   else if (fixType == 5) use_gps = false;   // Time only
 
+  /////////////////////////////////////////////////////////////////////////////////
   // No matter what, if the GPS is not functioning, we don't SSTV to give GPS a chance to lock on
-  if (!use_gps) inhibit_sstv = true;
+  //UNCOMMENT BEFORE FLIGHT
+  if (!use_gps) inhibit_sstv = false;
+
+
 
   // This condition is replicated at the CAMERA module as well
   if (im_buf && (sstv_run_now || (!inhibit_sstv && fast_sstv) || (!inhibit_sstv && (((tmin % SSTV_mod_m) == 0) && (curr_time - last_time) >= ((SSTV_mod_m * 60000L) - 60000L))))) {
     char sbuf[128] = {0};
     if(!imready || !decode_jpg()) {
-      memcpy(im_buf, im_ref, WIDTH * HEIGHT * COMPONENTS);
-      im->setTextColor(0);
+      memcpy(im_buf, im_ref, WIDTH * HEIGHT * COMPONENTS); // takes in image from CAMERA module as bytes
+      im->setTextColor(0,254);
     } else {
-      im->setTextColor(0, 245);
+      im->setTextColor(0,254);
     }
     im->setCursor(0, 0);
-    im->setTextSize(4);
+    im->setTextSize(2);
     im->print(callsign + callsign_suffix);
 
-    im->setCursor(194, 207);
-    im->setTextSize(4);
-    im->print("BEAR7");
+    im->setCursor(255, 0);
+    im->setTextSize(2);
+    im->print("BEAR8");
 
     // We start custom output at 150x35
     // That gives us 170x65 (without belly) or 170x135 of usable space
     // Font size 2: 15x4 chars | Font size 1: 34x8
-    im->setCursor(149, 37);
+    // mid point= 85
+
+////////////////////////////////////////////////
+    //test parameters
+
+    //uint16_t test_altitude=30000;
+    //uint16_t test_heading=100;
+    //uint16_t test_speed=100;
+    //uint16_t test_temp=-10;
+    //uint16_t test_press=1000;
+    
+////////////////////////////////////////////
+
+
+    im->setCursor(120,0);
     im->setTextSize(2);
 
     // Line 1: Date Time
-    sprintf(sbuf, "%02d/%02d/%02d %02d:%02d", tday, tmonth, tyear % 100, thour, tmin, tsec);
+    //sprintf(sbuf, "%02d/%02d/%02d %02d:%02d", tday, tmonth, tyear % 100, thour, tmin, tsec);
+    //im->print(sbuf);
+
+    //line 1: T PLUS
+    sprintf(sbuf,"+%02d:%02d",thour,tmin);
     im->print(sbuf);
 
-    // Line 2: Lat
-    im->setCursor(149, 54);
-    sprintf(sbuf, "Lat %.4f", glatitude);
+    // Line 2: coords
+    
+    im->setCursor(0, 16);
+    sprintf(sbuf, "%.5f,%.5f,%ikm/h", glatitude, glongitude,gspeed);
     im->print(sbuf);
+    
 
-    // Line 3: Lon
-    im->setCursor(149, 71);
-    sprintf(sbuf, "Lon %.4f", glongitude);
-    im->print(sbuf);
+    
 
     // Line 4: Alti Speed
-    im->setCursor(149, 88);
-    sprintf(sbuf, "%.0fm %.0fkm/h", galtitudeMSL, gspeed);
+    
+    //altitude
+    im->setCursor(45,222);
+    sprintf(sbuf, "%im", galtitudeMSL);
+    //sprintf(sbuf, "%im", test_altitude);
+    im->print(sbuf);   
+
+    //Line 5: Temp
+    im->setCursor(0,222);
+    //sprintf(sbuf, "%dC %.0fhPa", (int8_t)ptemp, ppress);
+    sprintf(sbuf, "%dC", (int8_t)ptemp);
     im->print(sbuf);
 
-    // Line 5: Temp Press
-    im->setCursor(162, 105);
-    sprintf(sbuf, "%d*C %.0fhPa", (int8_t)ptemp, ppress);
+    //line 6: Pressure
+    im->setCursor(235,222);
+    //sprintf(sbuf, "%dC %.0fhPa", (int8_t)ptemp, ppress);
+    sprintf(sbuf, "%.0fhPa", ppress);
     im->print(sbuf);
     
     robot_img(im_buf);

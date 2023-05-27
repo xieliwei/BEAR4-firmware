@@ -78,6 +78,8 @@ bool take_photo() {
       continue;
     }
 
+
+    //save picture as bytes
     uint16_t remaining = jpg_sz;
     uint8_t *jpg_img_p = jpg_img;
     while (remaining) {
