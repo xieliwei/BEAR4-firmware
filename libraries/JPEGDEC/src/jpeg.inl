@@ -33,9 +33,11 @@ static void JPEGGetMoreData(JPEGIMAGE *pPage);
 static int DecodeJPEG(JPEGIMAGE *pImage);
 static int32_t readRAM(JPEGFILE *pFile, uint8_t *pBuf, int32_t iLen);
 static int32_t seekMem(JPEGFILE *pFile, int32_t iPosition);
+#if defined (__MACH__) || defined( __LINUX__ ) || defined( __MCUXPRESSO )
 static int32_t readFile(JPEGFILE *pFile, uint8_t *pBuf, int32_t iLen);
 static int32_t seekFile(JPEGFILE *pFile, int32_t iPosition);
 static void closeFile(void *handle);
+#endif
 static void JPEGDither(JPEGIMAGE *pJPEG, int iWidth, int iHeight);
 /* JPEG tables */
 // zigzag ordering of DCT coefficients
@@ -2349,15 +2351,15 @@ static void JPEGPixel2LE(uint16_t *pDest, int iY1, int iY2, int iCb, int iCr)
 #endif
 } /* JPEGPixel2LE() */
 
-static void JPEGPixel2BE(uint16_t *pDest, int iY1, int iY2, int iCb, int iCr)
+static void JPEGPixel2BE(uint16_t *pDest, int32_t iY1, int32_t iY2, int32_t iCb, int32_t iCr)
 {
-    int iCBB, iCBG, iCRG, iCRR;
+    int32_t iCBB, iCBG, iCRG, iCRR;
     uint32_t ulPixel1, ulPixel2;
     
-    iCBB = 7258  * (iCb-0x80);
-    iCBG = -1409 * (iCb-0x80);
-    iCRG = -2925 * (iCr-0x80);
-    iCRR = 5742  * (iCr-0x80);
+    iCBB = 7258L  * (iCb-0x80);
+    iCBG = -1409L * (iCb-0x80);
+    iCRG = -2925L * (iCr-0x80);
+    iCRR = 5742L  * (iCr-0x80);
     ulPixel1 = usRangeTableB[((iCBB + iY1) >> 12) & 0x3ff]; // blue pixel
     ulPixel1 |= usRangeTableG[((iCBG + iCRG + iY1) >> 12) & 0x3ff]; // green pixel
     ulPixel1 |= usRangeTableR[((iCRR + iY1) >> 12) & 0x3ff]; // red pixel
@@ -2365,7 +2367,7 @@ static void JPEGPixel2BE(uint16_t *pDest, int iY1, int iY2, int iCb, int iCr)
     ulPixel2 = usRangeTableB[((iCBB + iY2) >> 12) & 0x3ff]; // blue pixel
     ulPixel2 |= usRangeTableG[((iCBG + iCRG + iY2) >> 12) & 0x3ff]; // green pixel
     ulPixel2 |= usRangeTableR[((iCRR + iY2) >> 12) & 0x3ff]; // red pixel
-    *(uint32_t *)&pDest[0] = __builtin_bswap16(ulPixel1) | (__builtin_bswap16(ulPixel2)<<16);
+    *(uint32_t *)&pDest[0] = __builtin_bswap16(ulPixel1) | ((uint32_t)__builtin_bswap16(ulPixel2)<<16);
 } /* JPEGPixel2BE() */
 
 static void JPEGPutMCU11(JPEGIMAGE *pJPEG, int x, int iPitch)
@@ -3452,9 +3454,13 @@ static int DecodeJPEG(JPEGIMAGE *pJPEG)
             if (xoff == iPitch || x == cx-1) // time to draw
             {
                 xoff = 0;
-                jd.iWidth = iPitch; // width of each LCD block group
+                jd.iWidth = jd.iWidthUsed = iPitch; // width of each LCD block group
+                jd.pUser = pJPEG->pUser;
                 if (pJPEG->ucPixelType > EIGHT_BIT_GRAYSCALE) // dither to 4/2/1 bits
                     JPEGDither(pJPEG, cx * mcuCX, mcuCY);
+                if ((x+1)*mcuCX > pJPEG->iWidth) { // right edge has clipped pixels
+                   jd.iWidthUsed = iPitch - (cx*mcuCX - pJPEG->iWidth);
+                }
                 if ((jd.y - pJPEG->iYOffset + mcuCY) > (pJPEG->iHeight>>iScaleShift)) { // last row needs to be trimmed
                    jd.iHeight = (pJPEG->iHeight>>iScaleShift) - (jd.y - pJPEG->iYOffset);
                 }

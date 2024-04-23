@@ -11,6 +11,10 @@
 	V1.0.5 -- Modification to allow ESP8266 SPI operation, thanks to Adam9850 for the generating the pull request
 	V1.0.6 -- Include getErrorReg() and getStatusReg() functions
 	V1.0.7 -- Fix compilation issue with Arduino Due
+	V1.0.8 -- Allow for additional TwoWire instances
+	V1.0.9 -- Fix compilation issue with STM32 Blue Pill
+	V1.0.10 -- Removed default parameter causing ESP32 compilation error with user defined I2C pins
+	V1.0.11 -- Fixed uninitialised "Wire" pointer for ESP8266/ESP32 with user defined I2C pins 
 	
 	The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -207,13 +211,13 @@ enum WatchdogTimout {											// I2C watchdog time-out
 
 class BMP388_DEV : public Device {															// Derive the BMP388_DEV class from the Device class
 	public:
-		BMP388_DEV();																								// BMP388_DEV object for I2C operation
+		BMP388_DEV(TwoWire& twoWire = Wire);												// BMP388_DEV object for I2C operation
 #ifdef ARDUINO_ARCH_ESP8266
-		BMP388_DEV(uint8_t sda, uint8_t scl);												// BMP388_DEV object for ESP8266 I2C operation with user-defined pins
+		BMP388_DEV(uint8_t sda, uint8_t scl, TwoWire& twoWire = Wire);	// BMP388_DEV object for ESP8266 I2C operation with user-defined pins
 #endif
 		BMP388_DEV(uint8_t cs);																			// BMP388_DEV object for SPI operation
 #ifdef ARDUINO_ARCH_ESP32
-		BMP388_DEV(uint8_t sda, uint8_t scl);												// BMP388_DEV object for ESP32 I2C operation with user-defined pins
+		BMP388_DEV(uint8_t sda, uint8_t scl, TwoWire& twoWire = Wire);	// BMP388_DEV object for ESP32 I2C operation with user-defined pins
 		BMP388_DEV(uint8_t cs, uint8_t spiPort, SPIClass& spiClass);	// BMP388_DEV object for SPI1 with supplied SPIClass object
 #endif
 		uint8_t begin(Mode mode = SLEEP_MODE, 												// Initialise the barometer with arguments

@@ -10,6 +10,9 @@
 	V1.0.4 -- Fix incorrect oversampling definition for x1, thanks to myval for raising the issue
 	V1.0.5 -- Modification to allow ESP8266 SPI operation, thanks to Adam9850 for the generating the pull request
 	V1.0.6 -- Fix compilation issue with Arduino Due
+	V1.0.7 -- Allow for additional TwoWire instances
+	V1.0.8 -- Fix compilation issue with STM32 Blue Pill
+	V1.0.9 -- Fixed uninitialised "Wire" pointer for ESP8266/ESP32 with user defined I2C pins 
 	
 	The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -52,17 +55,17 @@ enum Comms { I2C_COMMS, SPI_COMMS };
 
 class Device{
 	public:
-		Device();																										// Device object for I2C operation
+		Device(TwoWire& twoWire);																		// Device object for I2C operation
 #ifdef ARDUINO_ARCH_ESP8266
-		Device(uint8_t sda, uint8_t scl);														// Device object for ESP8266 I2C operation with user-defined pins
+		Device(uint8_t sda, uint8_t scl, TwoWire& twoWire);					// Device object for ESP8266 I2C operation with user-defined pins
 #endif
 		Device(uint8_t cs);																					// Device object for SPI operation
 #ifdef ARDUINO_ARCH_ESP32
-		Device(uint8_t sda, uint8_t scl);														// Device object for ESP32 I2C operation with user-defined pins
+		Device(uint8_t sda, uint8_t scl, TwoWire& twoWire);					// Device object for ESP32 I2C operation with user-defined pins
 		Device(uint8_t cs, uint8_t spiPort, SPIClass& spiClass);		// Device object for ESP32 HSPI operation with supplied SPI object
 #endif		
 		void setClock(uint32_t clockSpeed);													// Set the I2C/SPI clock speed
-#if !defined ARDUINO_ARCH_ESP8266 && !defined ARDUINO_ARCH_ESP32 && !defined ARDUINO_SAM_DUE
+#if !defined ARDUINO_ARCH_ESP8266 && !defined ARDUINO_ARCH_ESP32 && !defined ARDUINO_SAM_DUE && !defined STM32F1
 		void usingInterrupt(uint8_t pinNumber);											// Wrapper for the SPI.usingInterrupt() function
 		void notUsingInterrupt(uint8_t pinNumber);									// Wrapper for the SPI.notUsingInterrupt() function
 #endif
@@ -79,6 +82,7 @@ class Device{
 #ifdef ARDUINO_ARCH_ESP32
 		uint8_t spiPort;																						// SPI port type VSPI or HSPI
 #endif
+		TwoWire* i2c;																								// Pointer to the Wire class
 		SPIClass* spi;																							// Pointer to the SPI class
 		uint32_t spiClockSpeed;																			// The SPI clock speed		
 		const uint8_t WRITE_MASK = 0x7F;														// Sub-address write mask for SPI communications

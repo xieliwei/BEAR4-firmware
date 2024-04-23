@@ -38,6 +38,10 @@ This BMP388_DEV library offers the following features:
 <a name="version"></a>
 ## __Version__
 
+- Version 1.0.11 -- Fixed uninitialised "Wire" pointer for ESP8266/ESP32 with user defined I2C pins
+- Version 1.0.10 -- Removed default parameter causing ESP32 compilation error with user defined I2C pins
+- Version 1.0.9 -- Fix compilation issue for STM32 Blue Pill
+- Version 1.0.8 -- Allow for additional TwoWire instances 
 - Version 1.0.7 -- Fix compilation issue with Arduino Due
 - Version 1.0.6 -- Include getErrorReg() and getStatusReg() functions
 - Version 1.0.5 -- Modification to allow ESP8266 SPI operation, thanks to Adam9850 for the generating the pull request
@@ -75,6 +79,12 @@ For I2C communication the BMP388_DEV object is created (instantiated) without an
 
 ```
 BMP388_DEV bmp388;	// Set up I2C communications
+```
+
+Alternatively an auxiliary or secondary I2C (Wire) port can be specified:
+
+```
+BMP388_DEV bmp388(Wire1);  // Set up I2C communications on a secondary port
 ```
 
 By default the library uses the BMP388's I2C address 0x77. (To use the alternate I2C address: 0x76, see the begin() function below.

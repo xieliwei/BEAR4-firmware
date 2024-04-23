@@ -11,6 +11,10 @@
 	V1.0.5 -- Modification to allow ESP8266 SPI operation, thanks to Adam9850 for the generating the pull request
 	V1.0.6 -- Include getErrorReg() and getStatusReg() functions
 	V1.0.7 -- Fix compilation issue with Arduino Due
+	V1.0.8 -- Allow for additional TwoWire instances
+	V1.0.9 -- Fix compilation issue with STM32 Blue Pill
+	V1.0.10 -- Removed default parameter causing ESP32 compilation error with user defined I2C pins	
+	V1.0.11 -- Fixed uninitialised "Wire" pointer for ESP8266/ESP32 with user defined I2C pins 
 	
 	The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,13 +40,15 @@
 // BMP388_DEV Class Constructors
 ////////////////////////////////////////////////////////////////////////////////
 
-BMP388_DEV::BMP388_DEV() { setI2CAddress(BMP388_I2C_ADDR); }		// Constructor for I2C communications	
+BMP388_DEV::BMP388_DEV(TwoWire& twoWire) : Device(twoWire) { setI2CAddress(BMP388_I2C_ADDR); }		// Constructor for I2C communications	
 #ifdef ARDUINO_ARCH_ESP8266
-BMP388_DEV::BMP388_DEV(uint8_t sda, uint8_t scl) : Device(sda, scl) { setI2CAddress(BMP388_I2C_ADDR); } 	// Constructor for I2C comms on ESP8266
+BMP388_DEV::BMP388_DEV(uint8_t sda, uint8_t scl, TwoWire& twoWire) : 		// Constructor for I2C comms on ESP8266
+	Device(sda, scl, twoWire) { setI2CAddress(BMP388_I2C_ADDR); } 	
 #endif
-BMP388_DEV::BMP388_DEV(uint8_t cs) : Device(cs) {}			   			// Constructor for SPI communications
+BMP388_DEV::BMP388_DEV(uint8_t cs) : Device(cs) {}			   							// Constructor for SPI communications
 #ifdef ARDUINO_ARCH_ESP32 																			
-BMP388_DEV::BMP388_DEV(uint8_t sda, uint8_t scl) : Device(sda, scl) { setI2CAddress(BMP388_I2C_ADDR); } 	// Constructor for I2C comms on ESP32
+BMP388_DEV::BMP388_DEV(uint8_t sda, uint8_t scl, TwoWire& twoWire) : 		// Constructor for I2C comms on ESP32
+	Device(sda, scl, twoWire) { setI2CAddress(BMP388_I2C_ADDR); } 	
 BMP388_DEV::BMP388_DEV(uint8_t cs, uint8_t spiPort, SPIClass& spiClass) : Device(cs, spiPort, spiClass) {} // Constructor for SPI communications on the ESP32
 #endif
 ////////////////////////////////////////////////////////////////////////////////

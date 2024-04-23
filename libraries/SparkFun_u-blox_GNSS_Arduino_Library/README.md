@@ -48,7 +48,7 @@ v2.1 of the library adds support for u-blox AssistNow<sup>TM</sup> Assisted GNSS
 This library is the new and improved version of the very popular SparkFun u-blox GNSS Arduino Library. v2.0 contains some big changes and improvements:
 
 * Seamless support for "automatic" message delivery:
-  * In v1.8, you could ask for the NAV PVT (Navigation Position Velocity Time) message to be delivered _automatically_, without polling. v2.0 adds automatic support for [**26 messages**](./Theory.md#auto-messages), covering the full range of: standard and High Precision position, velocity, attitude and time information; relative positioning; event capture with nanosecond time resolution; raw GNSS signal data including carrier phase; Sensor Fusion; and High Navigation Rate data.
+  * In v1.8, you could ask for the NAV PVT (Navigation Position Velocity Time) message to be delivered _automatically_, without polling. v2.0 adds automatic support for [**29 messages**](./Theory.md#auto-messages), covering the full range of: standard and High Precision position, velocity, attitude and time information; relative positioning; event capture with nanosecond time resolution; raw GNSS signal data including carrier phase; Sensor Fusion; and High Navigation Rate data.
   * Don't see the message you really need? [Adding_New_Messages](./Adding_New_Messages.md) provides details on how to add "auto" support for your favourite message.
 * Dynamic memory allocation with clearly-defined data storage structs for each message:
   * There are no static 'global' variables to eat up your RAM. v2.0 automatically allocates memory for the automatic messages when they are enabled. You may find your total RAM use is lower with v2.0 than with v1.8.
@@ -80,14 +80,18 @@ There is a [new example](./examples/Dead_Reckoning/Example8_getNAVPVAT) showing 
 
 ## Memory Usage
 
-The u-blox GNSS library has grown considerably over the years and v2.0.8 came very close to completely filling the program memory on platforms like the ATmega328 (Arduino Uno).
-If you want to reduce the amount of memory used by the library, you can edit the header file (_SparkFun_u-blox_GNSS_Arduino_Library.h_) and uncomment line 60:
+The u-blox GNSS library has grown considerably over the years and now exceeds the available program memory on platforms like the ATmega328 (Arduino Uno).
+If you want to reduce the amount of memory used by the library, you can edit the header file (_SparkFun_u-blox_GNSS_Arduino_Library.h_) and uncomment lines 60 and 63:
 
 ```
 #define SFE_UBLOX_REDUCED_PROG_MEM // Uncommenting this line will delete the minor debug messages to save memory
 ```
 
-Doing this will save approximately 15% of the program memory used by the library. From v2.0.18 of the library, the debug messages are automatically deleted on ARDUINO_AVR_UNO platforms. For other platforms, you will need to uncomment that line manually.
+```
+#define SFE_UBLOX_DISABLE_AUTO_NMEA // Uncommenting this line will disable auto-NMEA support to save memory
+```
+
+**Please note:** the debug messages are automatically deleted and auto-NMEA support is automatically disabled on ARDUINO_AVR_UNO platforms. For other platforms, you will need to uncomment those lines manually.
 
 On Windows, you will normally find _SparkFun_u-blox_GNSS_Arduino_Library.h_ in:
 - Documents\Arduino\libraries\SparkFun_u-blox_GNSS_Arduino_Library\src
