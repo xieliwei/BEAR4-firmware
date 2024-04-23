@@ -29,8 +29,12 @@ inline uint8_t colour_lookup(uint8_t val, uint8_t comp) {
 #define ROBOT36_YSCAN_DELAY (269)
 #define ROBOT36_CSCAN_DELAY (268)
 #else
-#define ROBOT36_YSCAN_DELAY (261)
-#define ROBOT36_CSCAN_DELAY (260)
+// At 240MHz
+//#define ROBOT36_YSCAN_DELAY (258)
+//#define ROBOT36_CSCAN_DELAY (260)
+// At 80MHz
+#define ROBOT36_YSCAN_DELAY (255)
+#define ROBOT36_CSCAN_DELAY (249)
 #endif
 void robot_img(const uint8_t image[HEIGHT][WIDTH][COMPONENTS]) {
   //wake_dra818();
