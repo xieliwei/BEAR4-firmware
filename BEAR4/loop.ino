@@ -13,7 +13,7 @@ void loop() {
   task_wifi();
   // Every 5000ms
   task_sensors();
-  // Every 5000ms
+  // Every 1000ms
   // With always-running safeties
   task_heater();
   // Every 5000ms
