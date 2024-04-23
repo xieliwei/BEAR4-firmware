@@ -138,6 +138,7 @@ void send_report(bool use_gps) {
   if (last_alti > thealti) {
     descent_count++;
     if (descent_count >= 6) {
+      DBGPORT.println("Descent detected, started fast SSTV");
       fast_sstv = true;
     }
   } else {
