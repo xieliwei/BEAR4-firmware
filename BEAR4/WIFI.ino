@@ -43,6 +43,7 @@ void task_wifi() {
   unsigned long long curr_time = millis();
   static unsigned long long offset = 0;
   if ((curr_time - offset) > WIFI_TIMEOUT) {
+    Serial.println("Disabling WiFi");
     WiFi.softAPdisconnect(true);
     WiFi.mode(WIFI_OFF);
     btStop();
