@@ -13,12 +13,12 @@ uint8_t SSTV_mod_m = 5;
 uint16_t SSTV_inhibit_height_m = 3000;
 uint32_t SSTV_inhibit_time_ms = 1200000L; // 20 minutes
 
-String callsign = "9V1UP";
+String callsign = "9V1WP";
 String callsign_suffix = "-11";
 uint8_t callsign_ssid = 11;
 String comment_suffix = "SSTV@145.550M";
 
-String boot_message = "BEAR7 Project";
+String boot_message = "BEAR10 Project";
 
 #define TEMP_SP_HIGH_DEGC (7.0)
 #define TEMP_SP_LOW_DEGC (2.0)
@@ -49,8 +49,8 @@ String boot_message = "BEAR7 Project";
 // NOTE - This will be visible in source control,
 // don't use anything serious here!
 // Default IP of the device in softAP mode is:
-//    192.168.4.1 or BEAR7.local
-const char* wifissid = "BEAR7";
+//    192.168.4.1 or BEAR10.local
+const char* wifissid = "BEAR10";
 const char* wifipsk = "flyinghigh";
 // How long we keep the AP on before shutdown
 #define WIFI_TIMEOUT 90000

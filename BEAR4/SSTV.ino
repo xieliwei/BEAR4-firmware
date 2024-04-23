@@ -218,9 +218,9 @@ void task_sstv() {
     im->setTextSize(4);
     im->print(callsign + callsign_suffix);
 
-    im->setCursor(194, 207);
+    im->setCursor(174, 207);
     im->setTextSize(4);
-    im->print("BEAR7");
+    im->print("BEAR10");
 
     // We start custom output at 150x35
     // That gives us 170x65 (without belly) or 170x135 of usable space
