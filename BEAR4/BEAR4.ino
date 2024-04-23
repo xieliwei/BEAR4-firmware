@@ -43,6 +43,7 @@ String boot_message = "BEAR10 Project";
 //#define HW_ESP32S2
 //#define HW_ESP32S3
 
+// RBF - Set this to udpstream before flight
 //#define DBGPORT Serial
 #define DBGPORT udpstream
 
