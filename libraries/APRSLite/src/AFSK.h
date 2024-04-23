@@ -19,7 +19,7 @@
 #define SPACE_FREQ    (2166)
 #else
 #define BITRATE       (1200)
-#define BITLEN_MICROS (833)
+#define BITLEN_MICROS (829)
 #define BIT_STUFF_LEN (5)
 #define MARK_FREQ     (1200)
 #define SPACE_FREQ    (2200)
