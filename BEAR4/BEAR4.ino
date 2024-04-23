@@ -156,8 +156,8 @@ bool imready = false;
 #define PIN_I2C_SCL (GPIO_NUM_2)
 
 #define PIN_TX_AUD (GPIO_NUM_17)
-// In newer revisions, this pin is swapped with ONEWIRE
-#define PIN_RX_AUD (GPIO_NUM_18)
+// In older hardware revisions, this pin is swapped with ONEWIRE
+#define PIN_RX_AUD (GPIO_NUM_8)
 
 #define ADC_CELL1 (GPIO_NUM_6)
 #define ADC_CELL2 (GPIO_NUM_7)
@@ -168,8 +168,8 @@ bool imready = false;
 #define PIN_SPI_MISO (GPIO_NUM_40)
 #define PIN_SPI_MOSI (GPIO_NUM_1)
 
-// In newer revisions, this pin is swapped with RX_AUD
-#define PIN_ONEWIRE (GPIO_NUM_8)
+// In older hardware revisions, this pin is swapped with RX_AUD
+#define PIN_ONEWIRE (GPIO_NUM_18)
 
 #define PIN_I2C2_SDA (GPIO_NUM_15)
 #define PIN_I2C2_SCL (GPIO_NUM_16)
@@ -197,8 +197,8 @@ HardwareSerial Serial2(2);
 #define PIN_I2C_SCL (GPIO_NUM_2)
 
 #define PIN_TX_AUD (GPIO_NUM_17)
-// In newer revisions, this pin is swapped with ONEWIRE
-#define PIN_RX_AUD (GPIO_NUM_18)
+// In older hardware revisions, this pin is swapped with ONEWIRE
+#define PIN_RX_AUD (GPIO_NUM_8)
 
 #define ADC_CELL1 (GPIO_NUM_6)
 #define ADC_CELL2 (GPIO_NUM_7)
@@ -209,8 +209,8 @@ HardwareSerial Serial2(2);
 #define PIN_SPI_MISO (GPIO_NUM_40)
 #define PIN_SPI_MOSI (GPIO_NUM_1)
 
-// In newer revisions, this pin is swapped with RX_AUD
-#define PIN_ONEWIRE (GPIO_NUM_8)
+// In older hardware revisions, this pin is swapped with RX_AUD
+#define PIN_ONEWIRE (GPIO_NUM_18)
 
 #define PIN_I2C2_SDA (GPIO_NUM_15)
 #define PIN_I2C2_SCL (GPIO_NUM_16)
@@ -236,7 +236,8 @@ HardwareSerial Serial2(2);
 #define PIN_I2C_SCL (GPIO_NUM_22)
 
 #define PIN_TX_AUD (GPIO_NUM_25)
-#define PIN_RX_AUD (GPIO_NUM_26)
+// In older hardware revisions, this pin is swapped with ONEWIRE
+#define PIN_RX_AUD (GPIO_NUM_27)
 
 #define ADC_CELL1 (GPIO_NUM_34)
 #define ADC_CELL2 (GPIO_NUM_35)
@@ -247,7 +248,8 @@ HardwareSerial Serial2(2);
 #define PIN_SPI_MISO (GPIO_NUM_19)
 #define PIN_SPI_MOSI (GPIO_NUM_23)
 
-#define PIN_ONEWIRE (GPIO_NUM_27)
+// In older hardware revisions, this pin is swapped with RX_AUD
+#define PIN_ONEWIRE (GPIO_NUM_26)
 
 #define PIN_I2C2_SDA (GPIO_NUM_32)
 #define PIN_I2C2_SCL (GPIO_NUM_33)
