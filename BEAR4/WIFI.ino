@@ -61,5 +61,9 @@ void task_wifi() {
       // Extend Wi-Fi session
       offset = curr_time;
     }
+    if (WiFi.softAPgetStationNum() > 0) {
+      // Extend Wi-Fi session if there's a connected station
+      offset = curr_time;
+    }
   }
 }
