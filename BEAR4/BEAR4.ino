@@ -13,7 +13,7 @@ uint8_t SSTV_mod_m = 5;
 uint16_t SSTV_inhibit_height_m = 3000;
 uint32_t SSTV_inhibit_time_ms = 1200000L; // 20 minutes
 
-uint16_t heater_cut_height_m = 19000;
+uint16_t heater_cut_height_m = 25000;
 uint32_t heater_cut_height_hysteresis_time_ms = 60000L;
 uint32_t heater_cut_time_ms = 15000L; // 15 seconds
 
