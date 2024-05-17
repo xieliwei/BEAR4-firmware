@@ -3,9 +3,9 @@
 //////////////////////////////////////////////////////
 // !!!!!!! Check all RBF items before flight !!!!!!!
 // Note that this needs to be UTC
-uint16_t todays_date[] = {2022, 11, 12};
-uint16_t todays_time[] = {22, 45, 0};
-bool is_leap_year = false;
+uint16_t todays_date[] = {2024, 5, 19};
+uint16_t todays_time[] = {23, 0, 0};
+bool is_leap_year = true;
 
 uint8_t APRS_mod_s = 30;
 
@@ -84,10 +84,10 @@ uint8_t descent_count = 0;
 uint16_t msg_id = 0;
 
 // RTC
-uint16_t tyear = 2022;
-uint8_t tmonth = 11;
-uint8_t tday = 12;
-uint8_t thour = 0;
+uint16_t tyear = 2024;
+uint8_t tmonth = 5;
+uint8_t tday = 19;
+uint8_t thour = 23;
 uint8_t tmin = 0;
 uint8_t tsec = 0;
 uint16_t tms = 0;
