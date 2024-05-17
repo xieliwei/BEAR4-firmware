@@ -42,28 +42,30 @@ void setup_wifi() {
 void task_wifi() {
   unsigned long long curr_time = millis();
   static unsigned long long offset = 0;
-  if ((curr_time - offset) > WIFI_TIMEOUT) {
-    Serial.println("Disabling WiFi");
-    WiFi.softAPdisconnect(true);
-    WiFi.mode(WIFI_OFF);
-    btStop();
-
-    esp_wifi_stop();
-    esp_wifi_set_mode(WIFI_MODE_NULL);
-
-    wifiOn = false;
-  } else {
-    DynamicArduinoOTA.handle();
-    udpstream.flush();
-    udpstream.task();
-    if (udpstream.contains('!')) {
-      udpstream.clear();
-      // Extend Wi-Fi session
-      offset = curr_time;
-    }
-    if (WiFi.softAPgetStationNum() > 0) {
-      // Extend Wi-Fi session if there's a connected station
-      offset = curr_time;
+  if (wifiOn) {
+    if ((curr_time - offset) > WIFI_TIMEOUT) {
+      Serial.println("Disabling WiFi");
+      WiFi.softAPdisconnect(true);
+      WiFi.mode(WIFI_OFF);
+      btStop();
+  
+      esp_wifi_stop();
+      esp_wifi_set_mode(WIFI_MODE_NULL);
+  
+      wifiOn = false;
+    } else {
+      DynamicArduinoOTA.handle();
+      udpstream.flush();
+      udpstream.task();
+      if (udpstream.contains('!')) {
+        udpstream.clear();
+        // Extend Wi-Fi session
+        offset = curr_time;
+      }
+      if (WiFi.softAPgetStationNum() > 0) {
+        // Extend Wi-Fi session if there's a connected station
+        offset = curr_time;
+      }
     }
   }
 }
