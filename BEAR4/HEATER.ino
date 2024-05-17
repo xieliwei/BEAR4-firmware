@@ -2,8 +2,22 @@ void task_heater() {
   unsigned long curr_time = millis();
   static unsigned long last_time = 0;
   static bool heater_state = false;
-
   bool last_heater_state = heater_state;
+
+  static bool cut_now_actual = false;
+
+  // Delayed cut-now mechanism
+  if (cut_now) {
+    cut_now = false;
+    cut_now_actual = false;
+    cut_now_target_time = curr_time + 60000UL;
+    DBGPORT.println("Cut now scheduled for 60s in the future!");
+  }
+  if (cut_now_target_time > 0 && curr_time >= cut_now_target_time) {
+    cut_now_target_time = 0;
+    cut_now_actual = true;
+    DBGPORT.println("Cut now!");
+  }
 
   // Check for cut condition
   if (galtitudeMSL > heater_cut_height_m || paltitudeMSL > heater_cut_height_m) {
@@ -18,8 +32,8 @@ void task_heater() {
   // turn heater on when there is possibly a safety
   // cutoff about to be triggered after this.
   if (curr_time - last_time >= 1000) {
-    if (cut_now || (timeAltAboveHeaterCut_ms != 0 && (curr_time - timeAltAboveHeaterCut_ms) > heater_cut_height_hysteresis_time_ms)) {
-      cut_now = false;
+    if (cut_now_actual || (timeAltAboveHeaterCut_ms != 0 && (curr_time - timeAltAboveHeaterCut_ms) > heater_cut_height_hysteresis_time_ms)) {
+      cut_now_actual = false;
       heater_state = true;
       heaterOn = true;
     }

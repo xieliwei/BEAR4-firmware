@@ -140,6 +140,7 @@ float BV = 0.0;         // Volts
 bool heaterOn = true;
 uint32_t timeAltAboveHeaterCut_ms = 0;
 uint32_t timeHeaterCutOn_ms = 0;
+uint32_t cut_now_target_time = 0;
 
 // WiFi
 bool wifiOn = false;
